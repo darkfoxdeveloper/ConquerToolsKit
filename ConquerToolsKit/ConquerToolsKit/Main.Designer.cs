@@ -35,13 +35,17 @@
             this.btnEncrypt = new MetroFramework.Controls.MetroButton();
             this.btnDecrypt = new MetroFramework.Controls.MetroButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnEncryptDat = new MetroFramework.Controls.MetroButton();
+            this.btnDecryptDat = new MetroFramework.Controls.MetroButton();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.lblAbout = new MetroFramework.Controls.MetroLabel();
             this.mainPanel = new MetroFramework.Controls.MetroPanel();
             this.selectFile = new System.Windows.Forms.OpenFileDialog();
-            this.lblAbout = new MetroFramework.Controls.MetroLabel();
             this.mainIcon = new System.Windows.Forms.PictureBox();
             this.tabTools.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainIcon)).BeginInit();
             this.SuspendLayout();
@@ -50,9 +54,10 @@
             // 
             this.tabTools.Controls.Add(this.tabPage1);
             this.tabTools.Controls.Add(this.tabPage2);
+            this.tabTools.Controls.Add(this.tabPage3);
             this.tabTools.Location = new System.Drawing.Point(3, 3);
             this.tabTools.Name = "tabTools";
-            this.tabTools.SelectedIndex = 0;
+            this.tabTools.SelectedIndex = 1;
             this.tabTools.Size = new System.Drawing.Size(794, 382);
             this.tabTools.TabIndex = 0;
             this.tabTools.UseSelectable = true;
@@ -100,12 +105,49 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.lblAbout);
+            this.tabPage2.Controls.Add(this.btnEncryptDat);
+            this.tabPage2.Controls.Add(this.btnDecryptDat);
             this.tabPage2.Location = new System.Drawing.Point(4, 38);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(786, 340);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "About";
+            this.tabPage2.TabIndex = 2;
+            this.tabPage2.Text = "Encrypt/Decrypt";
+            // 
+            // btnEncryptDat
+            // 
+            this.btnEncryptDat.Location = new System.Drawing.Point(105, 15);
+            this.btnEncryptDat.Name = "btnEncryptDat";
+            this.btnEncryptDat.Size = new System.Drawing.Size(75, 23);
+            this.btnEncryptDat.TabIndex = 3;
+            this.btnEncryptDat.Text = "Encrypt";
+            this.btnEncryptDat.UseSelectable = true;
+            // 
+            // btnDecryptDat
+            // 
+            this.btnDecryptDat.Location = new System.Drawing.Point(15, 15);
+            this.btnDecryptDat.Name = "btnDecryptDat";
+            this.btnDecryptDat.Size = new System.Drawing.Size(75, 23);
+            this.btnDecryptDat.TabIndex = 2;
+            this.btnDecryptDat.Text = "Decrypt";
+            this.btnDecryptDat.UseSelectable = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.lblAbout);
+            this.tabPage3.Location = new System.Drawing.Point(4, 38);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(786, 340);
+            this.tabPage3.TabIndex = 1;
+            this.tabPage3.Text = "About";
+            // 
+            // lblAbout
+            // 
+            this.lblAbout.AutoSize = true;
+            this.lblAbout.Location = new System.Drawing.Point(15, 15);
+            this.lblAbout.Name = "lblAbout";
+            this.lblAbout.Size = new System.Drawing.Size(243, 19);
+            this.lblAbout.TabIndex = 0;
+            this.lblAbout.Text = "This program is under developing now...";
             // 
             // mainPanel
             // 
@@ -123,16 +165,7 @@
             // 
             // selectFile
             // 
-            this.selectFile.FileOk += new System.ComponentModel.CancelEventHandler(this.selectFile_FileOk);
-            // 
-            // lblAbout
-            // 
-            this.lblAbout.AutoSize = true;
-            this.lblAbout.Location = new System.Drawing.Point(15, 15);
-            this.lblAbout.Name = "lblAbout";
-            this.lblAbout.Size = new System.Drawing.Size(243, 19);
-            this.lblAbout.TabIndex = 0;
-            this.lblAbout.Text = "This program is under developing now...";
+            this.selectFile.FileOk += new System.ComponentModel.CancelEventHandler(this.SelectFile_FileOk);
             // 
             // mainIcon
             // 
@@ -161,7 +194,8 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.mainPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainIcon)).EndInit();
             this.ResumeLayout(false);
@@ -173,13 +207,16 @@
         private MetroFramework.Controls.MetroTabControl tabTools;
         private System.Windows.Forms.TabPage tabPage1;
         private MetroFramework.Controls.MetroPanel mainPanel;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.OpenFileDialog selectFile;
         private MetroFramework.Controls.MetroButton btnDecrypt;
         private MetroFramework.Controls.MetroButton btnEncrypt;
         private MetroFramework.Controls.MetroLabel lblSelectedFile;
         private MetroFramework.Controls.MetroLabel lblAbout;
         private System.Windows.Forms.PictureBox mainIcon;
+        private System.Windows.Forms.TabPage tabPage2;
+        private MetroFramework.Controls.MetroButton btnEncryptDat;
+        private MetroFramework.Controls.MetroButton btnDecryptDat;
     }
 }
 

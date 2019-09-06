@@ -15,7 +15,6 @@ namespace ConquerToolsKit
 
         private void Main_Load(object sender, EventArgs e)
         {
-
         }
 
         private void BtnDecrypt_Click(object sender, EventArgs e)
@@ -38,7 +37,7 @@ namespace ConquerToolsKit
             }
         }
 
-        private void selectFile_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        private void SelectFile_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             lblSelectedFile.Text = "Selected File: " + selectFile.FileName;
         }
