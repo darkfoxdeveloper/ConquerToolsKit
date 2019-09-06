@@ -20,22 +20,27 @@ namespace ConquerToolsKit
 
         private void BtnDecrypt_Click(object sender, EventArgs e)
         {
-            selectFile.Filter = "Itemtype File|*.dat";
+            selectFile.Filter = "Encrypted Itemtype File|*.dat";
             DialogResult dres = selectFile.ShowDialog();
             if (dres == DialogResult.OK)
             {
-                ctools.ItemtypeDecrypt(File.ReadAllBytes(selectFile.FileName), Path.ChangeExtension(selectFile.FileName, ".txt"));
+                ctools.ItemtypeDecrypt(selectFile.FileName, Path.ChangeExtension(selectFile.FileName, "txt"));
             }
         }
 
-        private void btnEncrypt_Click(object sender, EventArgs e)
+        private void BtnEncrypt_Click(object sender, EventArgs e)
         {
-            selectFile.Filter = "Itemtype File|*.dat";
+            selectFile.Filter = "Decrypted Itemtype File|*.txt";
             DialogResult dres = selectFile.ShowDialog();
             if (dres == DialogResult.OK)
             {
-                ctools.ItemtypeEncrypt(File.ReadAllBytes(selectFile.FileName), Path.ChangeExtension(selectFile.FileName, ".dat"));
+                ctools.ItemtypeEncrypt(selectFile.FileName, Path.ChangeExtension(selectFile.FileName, "dat"));
             }
+        }
+
+        private void selectFile_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            lblSelectedFile.Text = "Selected File: " + selectFile.FileName;
         }
     }
 }

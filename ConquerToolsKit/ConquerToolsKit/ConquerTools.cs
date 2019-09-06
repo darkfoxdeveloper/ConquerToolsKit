@@ -1,19 +1,20 @@
-﻿using System.IO;
+﻿using System.Globalization;
+using System.IO;
 
 namespace ConquerToolsKit
 {
     public class ConquerTools
     {
-        public void ItemtypeDecrypt(byte[] fileBytes, string filenameOutput)
+        public void ItemtypeDecrypt(string filename, string filenameOutput)
         {
             DatCrypto dc = new DatCrypto(DatCrypto.EncryptionKey.Common);
-            byte[] output = dc.Decrypt(fileBytes);
+            byte[] output = dc.Decrypt(File.ReadAllBytes(filename));
             File.WriteAllBytes(filenameOutput, output);
         }
-        public void ItemtypeEncrypt(byte[] fileBytes, string filenameOutput)
+        public void ItemtypeEncrypt(string filename, string filenameOutput)
         {
             DatCrypto dc = new DatCrypto(DatCrypto.EncryptionKey.Common);
-            byte[] output = dc.Encrypt(fileBytes);
+            byte[] output = dc.Encrypt(File.ReadAllBytes(filename));
             File.WriteAllBytes(filenameOutput, output);
         }
     }
@@ -26,8 +27,10 @@ namespace ConquerToolsKit
         byte[] key;
         public DatCrypto(EncryptionKey seed)
         {
+            int fixedSeed = 0;
+            int.TryParse(((int)seed).ToString(), NumberStyles.HexNumber, null, out fixedSeed);
             key = new byte[0x80];
-            MSRandom r = new MSRandom((int)seed);
+            MSRandom r = new MSRandom(fixedSeed);
             for (int i = 0; i < key.Length; i++)
             {
                 key[i] = (byte)(r.Next() % 0x100);

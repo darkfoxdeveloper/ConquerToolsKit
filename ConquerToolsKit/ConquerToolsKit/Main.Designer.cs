@@ -37,8 +37,10 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.mainPanel = new MetroFramework.Controls.MetroPanel();
             this.selectFile = new System.Windows.Forms.OpenFileDialog();
+            this.lblAbout = new MetroFramework.Controls.MetroLabel();
             this.tabTools.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.mainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,7 +50,7 @@
             this.tabTools.Controls.Add(this.tabPage2);
             this.tabTools.Location = new System.Drawing.Point(3, 3);
             this.tabTools.Name = "tabTools";
-            this.tabTools.SelectedIndex = 0;
+            this.tabTools.SelectedIndex = 1;
             this.tabTools.Size = new System.Drawing.Size(794, 382);
             this.tabTools.TabIndex = 0;
             this.tabTools.UseSelectable = true;
@@ -82,7 +84,7 @@
             this.btnEncrypt.TabIndex = 1;
             this.btnEncrypt.Text = "Encrypt";
             this.btnEncrypt.UseSelectable = true;
-            this.btnEncrypt.Click += new System.EventHandler(this.btnEncrypt_Click);
+            this.btnEncrypt.Click += new System.EventHandler(this.BtnEncrypt_Click);
             // 
             // btnDecrypt
             // 
@@ -96,11 +98,12 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.lblAbout);
             this.tabPage2.Location = new System.Drawing.Point(4, 38);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(786, 340);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Soon";
+            this.tabPage2.Text = "About";
             // 
             // mainPanel
             // 
@@ -115,6 +118,19 @@
             this.mainPanel.VerticalScrollbarBarColor = true;
             this.mainPanel.VerticalScrollbarHighlightOnWheel = false;
             this.mainPanel.VerticalScrollbarSize = 10;
+            // 
+            // selectFile
+            // 
+            this.selectFile.FileOk += new System.ComponentModel.CancelEventHandler(this.selectFile_FileOk);
+            // 
+            // lblAbout
+            // 
+            this.lblAbout.AutoSize = true;
+            this.lblAbout.Location = new System.Drawing.Point(15, 15);
+            this.lblAbout.Name = "lblAbout";
+            this.lblAbout.Size = new System.Drawing.Size(243, 19);
+            this.lblAbout.TabIndex = 0;
+            this.lblAbout.Text = "This program is under developing now...";
             // 
             // Main
             // 
@@ -131,6 +147,8 @@
             this.tabTools.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.mainPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -146,6 +164,7 @@
         private MetroFramework.Controls.MetroButton btnDecrypt;
         private MetroFramework.Controls.MetroButton btnEncrypt;
         private MetroFramework.Controls.MetroLabel lblSelectedFile;
+        private MetroFramework.Controls.MetroLabel lblAbout;
     }
 }
 
