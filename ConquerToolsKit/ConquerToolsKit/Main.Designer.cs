@@ -38,10 +38,12 @@
             this.mainPanel = new MetroFramework.Controls.MetroPanel();
             this.selectFile = new System.Windows.Forms.OpenFileDialog();
             this.lblAbout = new MetroFramework.Controls.MetroLabel();
+            this.mainIcon = new System.Windows.Forms.PictureBox();
             this.tabTools.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.mainPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // tabTools
@@ -50,7 +52,7 @@
             this.tabTools.Controls.Add(this.tabPage2);
             this.tabTools.Location = new System.Drawing.Point(3, 3);
             this.tabTools.Name = "tabTools";
-            this.tabTools.SelectedIndex = 1;
+            this.tabTools.SelectedIndex = 0;
             this.tabTools.Size = new System.Drawing.Size(794, 382);
             this.tabTools.TabIndex = 0;
             this.tabTools.UseSelectable = true;
@@ -132,11 +134,22 @@
             this.lblAbout.TabIndex = 0;
             this.lblAbout.Text = "This program is under developing now...";
             // 
+            // mainIcon
+            // 
+            this.mainIcon.Image = global::ConquerToolsKit.Properties.Resources.conquer_icon;
+            this.mainIcon.Location = new System.Drawing.Point(725, 10);
+            this.mainIcon.Name = "mainIcon";
+            this.mainIcon.Size = new System.Drawing.Size(68, 47);
+            this.mainIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.mainIcon.TabIndex = 2;
+            this.mainIcon.TabStop = false;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.mainIcon);
             this.Controls.Add(this.mainPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -150,6 +163,7 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.mainPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.mainIcon)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -165,6 +179,7 @@
         private MetroFramework.Controls.MetroButton btnEncrypt;
         private MetroFramework.Controls.MetroLabel lblSelectedFile;
         private MetroFramework.Controls.MetroLabel lblAbout;
+        private System.Windows.Forms.PictureBox mainIcon;
     }
 }
 
