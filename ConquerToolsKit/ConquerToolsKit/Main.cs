@@ -66,7 +66,7 @@ namespace ConquerToolsKit
                 ctools.AutoDetectionDecrypt(selectFile.FileName, filenameOutput);
                 cbxDatFileType.SelectedItem = ctools.SelectedDatFile.CurrentDatFileType.ToString();
                 string[] lines = File.ReadAllLines(filenameOutput);
-                ctools.GenerateTable(lines, dgvAdvanced, ctools.SelectedDatFile);
+                ctools.GenerateTable(lines, dgvAdvanced, ctools.SelectedDatFile, tglRawMode.Checked);
             }
         }
     }

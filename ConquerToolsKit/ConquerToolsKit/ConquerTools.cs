@@ -48,21 +48,39 @@ namespace ConquerToolsKit
             File.WriteAllBytes(filenameOutput, output);
         }
         
-        public void GenerateTable(string[] FileContent, DataGridView dgContent, DatCrypto datCrypto)
+        public void GenerateTable(string[] FileContent, DataGridView dgContent, DatCrypto datCrypto, bool RAWMode = false)
         {
-            DataTable dt = TableFromStrings(FileContent, new char[] { ' ' });
-            switch (datCrypto.CurrentDatFileType)
+            // TODO config of dat file type from a json
+            DataTable dt = null;
+            if (RAWMode)
             {
-                case DatCrypto.DatFileType.ITEMTYPE:
-                    {
-                        dt = TableFromStrings(FileContent, new char[] { '@', '@' });
-                        break;
-                    }
-                case DatCrypto.DatFileType.MONSTER:
-                    {
-                        dt = TableFromStrings(FileContent, new char[] { ' ' });
-                        break;
-                    }
+                dt = RAWTableFromStrings(FileContent);
+            } else
+            {
+                switch (datCrypto.CurrentDatFileType)
+                {
+                    case DatCrypto.DatFileType.ITEMTYPE:
+                    case DatCrypto.DatFileType.MAGICTYPE:
+                        {
+                            dt = TableFromStrings(FileContent, new char[] { '@', '@' });
+                            break;
+                        }
+                    case DatCrypto.DatFileType.MAGICTYPEOP:
+                        {
+                            dt = TableFromStrings(FileContent, new char[] { ',' });
+                            break;
+                        }
+                    case DatCrypto.DatFileType.MONSTER:
+                        {
+                            dt = TableFromStrings(FileContent, new char[] { ' ' });
+                            break;
+                        }
+                    default:
+                        {
+                            dt = TableFromStrings(FileContent, new char[] { ' ' });
+                            break;
+                        }
+                }
             }
             dgContent.DataSource = dt;
         }
@@ -106,6 +124,19 @@ namespace ConquerToolsKit
                     lineColumns.Add(line);
                 }
                 dt.Rows.Add(lineColumns.ToArray());
+            }
+            return dt;
+        }
+        public DataTable RAWTableFromStrings(string[] lines)
+        {
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("RAW"));
+
+            foreach (string currentLine in lines)
+            {
+                dt.NewRow();
+                dt.Rows.Add(currentLine);
             }
             return dt;
         }
@@ -176,6 +207,7 @@ namespace ConquerToolsKit
         private void FindEncryptionKeyByFilename()
         {
             CurrentDatFileType = DatFileType.AUTODETECT;
+            // TODO key of dat file from a json
             string name = Path.GetFileNameWithoutExtension(Filename);
             switch (name)
             {
@@ -189,6 +221,18 @@ namespace ConquerToolsKit
                     {
                         CurrentEncryptionKey = EncryptionKey.COMMON;
                         CurrentDatFileType = DatFileType.MONSTER;
+                        break;
+                    }
+                case "MagicType":
+                    {
+                        CurrentEncryptionKey = EncryptionKey.COMMON;
+                        CurrentDatFileType = DatFileType.MAGICTYPE;
+                        break;
+                    }
+                case "magictypeop":
+                    {
+                        CurrentEncryptionKey = EncryptionKey.COMMON;
+                        CurrentDatFileType = DatFileType.MAGICTYPEOP;
                         break;
                     }
             }
@@ -206,6 +250,8 @@ namespace ConquerToolsKit
             AUTODETECT = 0,
             ITEMTYPE,
             MONSTER,
+            MAGICTYPE,
+            MAGICTYPEOP,
         }
     }
 

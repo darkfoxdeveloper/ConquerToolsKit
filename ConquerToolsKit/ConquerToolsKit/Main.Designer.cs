@@ -35,6 +35,9 @@
             this.btnEncrypt = new MetroFramework.Controls.MetroButton();
             this.btnDecrypt = new MetroFramework.Controls.MetroButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tglRawMode = new MetroFramework.Controls.MetroToggle();
+            this.dgvAdvanced = new System.Windows.Forms.DataGridView();
+            this.lblSelectedDatFile = new MetroFramework.Controls.MetroLabel();
             this.btnOpenFile = new MetroFramework.Controls.MetroButton();
             this.cbxDatFileType = new MetroFramework.Controls.MetroComboBox();
             this.btnEncryptDat = new MetroFramework.Controls.MetroButton();
@@ -44,15 +47,14 @@
             this.mainPanel = new MetroFramework.Controls.MetroPanel();
             this.selectFile = new System.Windows.Forms.OpenFileDialog();
             this.mainIcon = new System.Windows.Forms.PictureBox();
-            this.lblSelectedDatFile = new MetroFramework.Controls.MetroLabel();
-            this.dgvAdvanced = new System.Windows.Forms.DataGridView();
+            this.lblRawMode = new MetroFramework.Controls.MetroLabel();
             this.tabTools.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAdvanced)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainIcon)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAdvanced)).BeginInit();
             this.SuspendLayout();
             // 
             // tabTools
@@ -110,6 +112,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.lblRawMode);
+            this.tabPage2.Controls.Add(this.tglRawMode);
             this.tabPage2.Controls.Add(this.dgvAdvanced);
             this.tabPage2.Controls.Add(this.lblSelectedDatFile);
             this.tabPage2.Controls.Add(this.btnOpenFile);
@@ -121,6 +125,37 @@
             this.tabPage2.Size = new System.Drawing.Size(786, 340);
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Advanced";
+            // 
+            // tglRawMode
+            // 
+            this.tglRawMode.AutoSize = true;
+            this.tglRawMode.Location = new System.Drawing.Point(687, 66);
+            this.tglRawMode.Name = "tglRawMode";
+            this.tglRawMode.Size = new System.Drawing.Size(80, 17);
+            this.tglRawMode.TabIndex = 8;
+            this.tglRawMode.Text = "Off";
+            this.tglRawMode.UseSelectable = true;
+            // 
+            // dgvAdvanced
+            // 
+            this.dgvAdvanced.AllowUserToAddRows = false;
+            this.dgvAdvanced.AllowUserToDeleteRows = false;
+            this.dgvAdvanced.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAdvanced.Location = new System.Drawing.Point(15, 90);
+            this.dgvAdvanced.Name = "dgvAdvanced";
+            this.dgvAdvanced.ReadOnly = true;
+            this.dgvAdvanced.Size = new System.Drawing.Size(755, 233);
+            this.dgvAdvanced.TabIndex = 7;
+            // 
+            // lblSelectedDatFile
+            // 
+            this.lblSelectedDatFile.AutoSize = true;
+            this.lblSelectedDatFile.BackColor = System.Drawing.Color.Transparent;
+            this.lblSelectedDatFile.Location = new System.Drawing.Point(15, 45);
+            this.lblSelectedDatFile.Name = "lblSelectedDatFile";
+            this.lblSelectedDatFile.Size = new System.Drawing.Size(95, 19);
+            this.lblSelectedDatFile.TabIndex = 6;
+            this.lblSelectedDatFile.Text = "Selected File: -";
             // 
             // btnOpenFile
             // 
@@ -208,26 +243,14 @@
             this.mainIcon.TabIndex = 2;
             this.mainIcon.TabStop = false;
             // 
-            // lblSelectedDatFile
+            // lblRawMode
             // 
-            this.lblSelectedDatFile.AutoSize = true;
-            this.lblSelectedDatFile.BackColor = System.Drawing.Color.Transparent;
-            this.lblSelectedDatFile.Location = new System.Drawing.Point(15, 45);
-            this.lblSelectedDatFile.Name = "lblSelectedDatFile";
-            this.lblSelectedDatFile.Size = new System.Drawing.Size(95, 19);
-            this.lblSelectedDatFile.TabIndex = 6;
-            this.lblSelectedDatFile.Text = "Selected File: -";
-            // 
-            // dgvAdvanced
-            // 
-            this.dgvAdvanced.AllowUserToAddRows = false;
-            this.dgvAdvanced.AllowUserToDeleteRows = false;
-            this.dgvAdvanced.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAdvanced.Location = new System.Drawing.Point(15, 90);
-            this.dgvAdvanced.Name = "dgvAdvanced";
-            this.dgvAdvanced.ReadOnly = true;
-            this.dgvAdvanced.Size = new System.Drawing.Size(755, 233);
-            this.dgvAdvanced.TabIndex = 7;
+            this.lblRawMode.AutoSize = true;
+            this.lblRawMode.Location = new System.Drawing.Point(595, 65);
+            this.lblRawMode.Name = "lblRawMode";
+            this.lblRawMode.Size = new System.Drawing.Size(87, 19);
+            this.lblRawMode.TabIndex = 9;
+            this.lblRawMode.Text = "Show in RAW";
             // 
             // Main
             // 
@@ -247,11 +270,11 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAdvanced)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.mainPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainIcon)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAdvanced)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -275,6 +298,8 @@
         private MetroFramework.Controls.MetroButton btnOpenFile;
         private MetroFramework.Controls.MetroLabel lblSelectedDatFile;
         private System.Windows.Forms.DataGridView dgvAdvanced;
+        private MetroFramework.Controls.MetroToggle tglRawMode;
+        private MetroFramework.Controls.MetroLabel lblRawMode;
     }
 }
 
