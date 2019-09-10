@@ -35,6 +35,8 @@
             this.btnEncrypt = new MetroFramework.Controls.MetroButton();
             this.btnDecrypt = new MetroFramework.Controls.MetroButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnOpenFile = new MetroFramework.Controls.MetroButton();
+            this.cbxEncryptionKey = new MetroFramework.Controls.MetroComboBox();
             this.btnEncryptDat = new MetroFramework.Controls.MetroButton();
             this.btnDecryptDat = new MetroFramework.Controls.MetroButton();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -42,6 +44,7 @@
             this.mainPanel = new MetroFramework.Controls.MetroPanel();
             this.selectFile = new System.Windows.Forms.OpenFileDialog();
             this.mainIcon = new System.Windows.Forms.PictureBox();
+            this.lblSelectedDatFile = new MetroFramework.Controls.MetroLabel();
             this.tabTools.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -57,7 +60,7 @@
             this.tabTools.Controls.Add(this.tabPage3);
             this.tabTools.Location = new System.Drawing.Point(3, 3);
             this.tabTools.Name = "tabTools";
-            this.tabTools.SelectedIndex = 1;
+            this.tabTools.SelectedIndex = 0;
             this.tabTools.Size = new System.Drawing.Size(794, 382);
             this.tabTools.TabIndex = 0;
             this.tabTools.UseSelectable = true;
@@ -105,31 +108,56 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.lblSelectedDatFile);
+            this.tabPage2.Controls.Add(this.btnOpenFile);
+            this.tabPage2.Controls.Add(this.cbxEncryptionKey);
             this.tabPage2.Controls.Add(this.btnEncryptDat);
             this.tabPage2.Controls.Add(this.btnDecryptDat);
             this.tabPage2.Location = new System.Drawing.Point(4, 38);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(786, 340);
             this.tabPage2.TabIndex = 2;
-            this.tabPage2.Text = "Encrypt/Decrypt";
+            this.tabPage2.Text = "Advanced";
+            // 
+            // btnOpenFile
+            // 
+            this.btnOpenFile.Location = new System.Drawing.Point(15, 15);
+            this.btnOpenFile.Name = "btnOpenFile";
+            this.btnOpenFile.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenFile.TabIndex = 5;
+            this.btnOpenFile.Text = "Open File";
+            this.btnOpenFile.UseSelectable = true;
+            this.btnOpenFile.Click += new System.EventHandler(this.BtnOpenFile_Click);
+            // 
+            // cbxEncryptionKey
+            // 
+            this.cbxEncryptionKey.FormattingEnabled = true;
+            this.cbxEncryptionKey.ItemHeight = 23;
+            this.cbxEncryptionKey.Location = new System.Drawing.Point(290, 13);
+            this.cbxEncryptionKey.Name = "cbxEncryptionKey";
+            this.cbxEncryptionKey.Size = new System.Drawing.Size(121, 29);
+            this.cbxEncryptionKey.TabIndex = 4;
+            this.cbxEncryptionKey.UseSelectable = true;
             // 
             // btnEncryptDat
             // 
-            this.btnEncryptDat.Location = new System.Drawing.Point(105, 15);
+            this.btnEncryptDat.Location = new System.Drawing.Point(200, 15);
             this.btnEncryptDat.Name = "btnEncryptDat";
             this.btnEncryptDat.Size = new System.Drawing.Size(75, 23);
             this.btnEncryptDat.TabIndex = 3;
             this.btnEncryptDat.Text = "Encrypt";
             this.btnEncryptDat.UseSelectable = true;
+            this.btnEncryptDat.Click += new System.EventHandler(this.BtnEncryptDat_Click);
             // 
             // btnDecryptDat
             // 
-            this.btnDecryptDat.Location = new System.Drawing.Point(15, 15);
+            this.btnDecryptDat.Location = new System.Drawing.Point(105, 15);
             this.btnDecryptDat.Name = "btnDecryptDat";
             this.btnDecryptDat.Size = new System.Drawing.Size(75, 23);
             this.btnDecryptDat.TabIndex = 2;
             this.btnDecryptDat.Text = "Decrypt";
             this.btnDecryptDat.UseSelectable = true;
+            this.btnDecryptDat.Click += new System.EventHandler(this.BtnDecryptDat_Click);
             // 
             // tabPage3
             // 
@@ -177,6 +205,16 @@
             this.mainIcon.TabIndex = 2;
             this.mainIcon.TabStop = false;
             // 
+            // lblSelectedDatFile
+            // 
+            this.lblSelectedDatFile.AutoSize = true;
+            this.lblSelectedDatFile.BackColor = System.Drawing.Color.Transparent;
+            this.lblSelectedDatFile.Location = new System.Drawing.Point(15, 45);
+            this.lblSelectedDatFile.Name = "lblSelectedDatFile";
+            this.lblSelectedDatFile.Size = new System.Drawing.Size(95, 19);
+            this.lblSelectedDatFile.TabIndex = 6;
+            this.lblSelectedDatFile.Text = "Selected File: -";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -194,6 +232,7 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.mainPanel.ResumeLayout(false);
@@ -217,6 +256,9 @@
         private System.Windows.Forms.TabPage tabPage2;
         private MetroFramework.Controls.MetroButton btnEncryptDat;
         private MetroFramework.Controls.MetroButton btnDecryptDat;
+        private MetroFramework.Controls.MetroComboBox cbxEncryptionKey;
+        private MetroFramework.Controls.MetroButton btnOpenFile;
+        private MetroFramework.Controls.MetroLabel lblSelectedDatFile;
     }
 }
 
