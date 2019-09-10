@@ -36,7 +36,7 @@
             this.btnDecrypt = new MetroFramework.Controls.MetroButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnOpenFile = new MetroFramework.Controls.MetroButton();
-            this.cbxEncryptionKey = new MetroFramework.Controls.MetroComboBox();
+            this.cbxDatFileType = new MetroFramework.Controls.MetroComboBox();
             this.btnEncryptDat = new MetroFramework.Controls.MetroButton();
             this.btnDecryptDat = new MetroFramework.Controls.MetroButton();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -45,12 +45,14 @@
             this.selectFile = new System.Windows.Forms.OpenFileDialog();
             this.mainIcon = new System.Windows.Forms.PictureBox();
             this.lblSelectedDatFile = new MetroFramework.Controls.MetroLabel();
+            this.dgvAdvanced = new System.Windows.Forms.DataGridView();
             this.tabTools.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainIcon)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAdvanced)).BeginInit();
             this.SuspendLayout();
             // 
             // tabTools
@@ -60,7 +62,7 @@
             this.tabTools.Controls.Add(this.tabPage3);
             this.tabTools.Location = new System.Drawing.Point(3, 3);
             this.tabTools.Name = "tabTools";
-            this.tabTools.SelectedIndex = 0;
+            this.tabTools.SelectedIndex = 1;
             this.tabTools.Size = new System.Drawing.Size(794, 382);
             this.tabTools.TabIndex = 0;
             this.tabTools.UseSelectable = true;
@@ -108,9 +110,10 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.dgvAdvanced);
             this.tabPage2.Controls.Add(this.lblSelectedDatFile);
             this.tabPage2.Controls.Add(this.btnOpenFile);
-            this.tabPage2.Controls.Add(this.cbxEncryptionKey);
+            this.tabPage2.Controls.Add(this.cbxDatFileType);
             this.tabPage2.Controls.Add(this.btnEncryptDat);
             this.tabPage2.Controls.Add(this.btnDecryptDat);
             this.tabPage2.Location = new System.Drawing.Point(4, 38);
@@ -129,15 +132,15 @@
             this.btnOpenFile.UseSelectable = true;
             this.btnOpenFile.Click += new System.EventHandler(this.BtnOpenFile_Click);
             // 
-            // cbxEncryptionKey
+            // cbxDatFileType
             // 
-            this.cbxEncryptionKey.FormattingEnabled = true;
-            this.cbxEncryptionKey.ItemHeight = 23;
-            this.cbxEncryptionKey.Location = new System.Drawing.Point(290, 13);
-            this.cbxEncryptionKey.Name = "cbxEncryptionKey";
-            this.cbxEncryptionKey.Size = new System.Drawing.Size(121, 29);
-            this.cbxEncryptionKey.TabIndex = 4;
-            this.cbxEncryptionKey.UseSelectable = true;
+            this.cbxDatFileType.FormattingEnabled = true;
+            this.cbxDatFileType.ItemHeight = 23;
+            this.cbxDatFileType.Location = new System.Drawing.Point(290, 13);
+            this.cbxDatFileType.Name = "cbxDatFileType";
+            this.cbxDatFileType.Size = new System.Drawing.Size(121, 29);
+            this.cbxDatFileType.TabIndex = 4;
+            this.cbxDatFileType.UseSelectable = true;
             // 
             // btnEncryptDat
             // 
@@ -215,6 +218,17 @@
             this.lblSelectedDatFile.TabIndex = 6;
             this.lblSelectedDatFile.Text = "Selected File: -";
             // 
+            // dgvAdvanced
+            // 
+            this.dgvAdvanced.AllowUserToAddRows = false;
+            this.dgvAdvanced.AllowUserToDeleteRows = false;
+            this.dgvAdvanced.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAdvanced.Location = new System.Drawing.Point(15, 90);
+            this.dgvAdvanced.Name = "dgvAdvanced";
+            this.dgvAdvanced.ReadOnly = true;
+            this.dgvAdvanced.Size = new System.Drawing.Size(755, 233);
+            this.dgvAdvanced.TabIndex = 7;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -237,6 +251,7 @@
             this.tabPage3.PerformLayout();
             this.mainPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainIcon)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAdvanced)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -256,9 +271,10 @@
         private System.Windows.Forms.TabPage tabPage2;
         private MetroFramework.Controls.MetroButton btnEncryptDat;
         private MetroFramework.Controls.MetroButton btnDecryptDat;
-        private MetroFramework.Controls.MetroComboBox cbxEncryptionKey;
+        private MetroFramework.Controls.MetroComboBox cbxDatFileType;
         private MetroFramework.Controls.MetroButton btnOpenFile;
         private MetroFramework.Controls.MetroLabel lblSelectedDatFile;
+        private System.Windows.Forms.DataGridView dgvAdvanced;
     }
 }
 

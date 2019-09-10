@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using static ConquerToolsKit.DatCrypto;
 
 namespace ConquerToolsKit
 {
@@ -16,8 +15,7 @@ namespace ConquerToolsKit
 
         private void Main_Load(object sender, EventArgs e)
         {
-            DatCrypto dc = new DatCrypto(DatCrypto.EncryptionKey.COMMON);
-            cbxEncryptionKey.DataSource = Enum.GetNames(typeof(DatCrypto.EncryptionKey));
+            cbxDatFileType.DataSource = Enum.GetNames(typeof(DatCrypto.DatFileType));
         }
 
         private void BtnDecrypt_Click(object sender, EventArgs e)
@@ -48,13 +46,13 @@ namespace ConquerToolsKit
         private void BtnDecryptDat_Click(object sender, EventArgs e)
         {
             selectFile.Filter = "Encrypted Conquer Dat File|*.dat";
-            ctools.AutoDetectionEncrypt(ctools.SelectedFile, Path.ChangeExtension(selectFile.FileName, "txt"));
+            ctools.AutoDetectionDecrypt(ctools.SelectedDatFile.Filename, Path.ChangeExtension(selectFile.FileName, "txt"));
         }
 
         private void BtnEncryptDat_Click(object sender, EventArgs e)
         {
             selectFile.Filter = "Decrypted Conquer Dat File|*.txt";
-            ctools.AutoDetectionEncrypt(ctools.SelectedFile, Path.ChangeExtension(selectFile.FileName, "dat"));
+            ctools.AutoDetectionEncrypt(ctools.SelectedDatFile.Filename, Path.ChangeExtension(selectFile.FileName, "dat"));
         }
 
         private void BtnOpenFile_Click(object sender, EventArgs e)
@@ -63,13 +61,12 @@ namespace ConquerToolsKit
             DialogResult dres = selectFile.ShowDialog();
             if (dres == DialogResult.OK)
             {
-                ctools.SelectedFile = selectFile.FileName;
-                DatCrypto dc = new DatCrypto(ctools.SelectedFile);
-                cbxEncryptionKey.SelectedItem = dc.DetectedEncryptionKey.ToString();
                 lblSelectedDatFile.Text = "Selected File: " + selectFile.FileName;
-            } else
-            {
-                ctools.SelectedFile = "";
+                string filenameOutput = Path.ChangeExtension(selectFile.FileName, "txt");
+                ctools.AutoDetectionDecrypt(selectFile.FileName, filenameOutput);
+                cbxDatFileType.SelectedItem = ctools.SelectedDatFile.CurrentDatFileType.ToString();
+                string[] lines = File.ReadAllLines(filenameOutput);
+                ctools.GenerateTable(lines, dgvAdvanced, ctools.SelectedDatFile);
             }
         }
     }
