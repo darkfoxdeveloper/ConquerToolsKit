@@ -117,6 +117,15 @@ namespace ConquerToolsKit
                             EncryptionKey = ConquerDatFile.EncryptionKey.COMMON,
                             Separators = null
                         }
+                    },
+                    {
+                        ConquerDatFile.DatFileType.MAPDESTINATION,
+                        new DatFileConfig()
+                        {
+                            FileType = ConquerDatFile.DatFileType.MAPDESTINATION,
+                            EncryptionKey = ConquerDatFile.EncryptionKey.COMMON,
+                            Separators = null
+                        }
                     }
                 };
 
@@ -388,6 +397,11 @@ namespace ConquerToolsKit
                         CurrentDatFileType = DatFileType.AUTOLOOT;
                         break;
                     }
+                case "mapdestination":
+                    {
+                        CurrentDatFileType = DatFileType.MAPDESTINATION;
+                        break;
+                    }
             }
         }
         
@@ -432,6 +446,7 @@ namespace ConquerToolsKit
             LEVELEXP,
             LEVEXP,
             AUTOLOOT,
+            MAPDESTINATION,
         }
     }
 
