@@ -68,10 +68,17 @@ namespace ConquerToolsKit
                 {
                     ConquerToolsHelper.CTools.CustomDecrypt(selectFile.FileName, filenameOutput, datFileType);
                 }
-                cbxDatFileType.SelectedItem = ConquerToolsHelper.CTools.SelectedDatFile.CurrentDatFileType.ToString();
-                string[] lines = File.ReadAllLines(filenameOutput);
-                ConquerToolsHelper.CTools.GenerateTable(lines, dgvAdvanced, ConquerToolsHelper.CTools.SelectedDatFile, tglRawMode.Checked);
+                if (File.Exists(filenameOutput))
+                {
+                    string[] lines = File.ReadAllLines(filenameOutput);
+                    ConquerToolsHelper.CTools.GenerateTable(lines, dgvAdvanced, ConquerToolsHelper.CTools.SelectedDatFile, tglRawMode.Checked);
+                }
             }
+        }
+
+        private void MainIcon_Click(object sender, EventArgs e)
+        {
+            tabTools.SelectedIndex = tabTools.TabCount - 1;
         }
     }
 }

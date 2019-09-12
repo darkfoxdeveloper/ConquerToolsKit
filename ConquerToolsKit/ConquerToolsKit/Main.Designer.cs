@@ -204,6 +204,7 @@
             this.mainIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.mainIcon.TabIndex = 2;
             this.mainIcon.TabStop = false;
+            this.mainIcon.Click += new System.EventHandler(this.MainIcon_Click);
             // 
             // Main
             // 

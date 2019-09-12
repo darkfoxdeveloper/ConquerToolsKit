@@ -49,7 +49,19 @@ namespace ConquerToolsKit
                         {
                             FileType = ConquerDatFile.DatFileType.ITEMTYPE,
                             EncryptionKey = ConquerDatFile.EncryptionKey.COMMON,
-                            Separators = new char[] { '@', '@' }
+                            Separators = new char[] { '@', '@' },
+                            FileHeaders = new string[] {
+                                "ID",
+                                "Name",
+                                "RequiredProfession",
+                                "Level",
+                                "RequiredLevel",
+                                "RequiredSex",
+                                "RequiredForce",
+                                "RequiredDexterity",
+                                "RequiredHealth",
+                                "RequiredSoul",
+                            }
                         }
                     },
                     {
@@ -78,32 +90,43 @@ namespace ConquerToolsKit
                             EncryptionKey = ConquerDatFile.EncryptionKey.COMMON,
                             Separators = null
                         }
+                    },
+                    {
+                        ConquerDatFile.DatFileType.LEVELEXP,
+                        new DatFileConfig()
+                        {
+                            FileType = ConquerDatFile.DatFileType.LEVELEXP,
+                            EncryptionKey = ConquerDatFile.EncryptionKey.CUSTOM,
+                            Separators = new char[] { ',' }
+                        }
+                    },
+                    {
+                        ConquerDatFile.DatFileType.LEVEXP,
+                        new DatFileConfig()
+                        {
+                            FileType = ConquerDatFile.DatFileType.LEVEXP,
+                            EncryptionKey = ConquerDatFile.EncryptionKey.ALTERNATIVE,
+                            Separators = null
+                        }
+                    },
+                    {
+                        ConquerDatFile.DatFileType.AUTOLOOT,
+                        new DatFileConfig()
+                        {
+                            FileType = ConquerDatFile.DatFileType.AUTOLOOT,
+                            EncryptionKey = ConquerDatFile.EncryptionKey.COMMON,
+                            Separators = null
+                        }
                     }
                 };
 
                 ConquerToolsConfig c = new ConquerToolsConfig(d);
-                File.WriteAllText(FileConfigName, JsonConvert.SerializeObject(c));
+                File.WriteAllText(FileConfigName, JsonConvert.SerializeObject(c, Formatting.Indented));
                 CurrentConfig = c;
             } else
             {
                 CurrentConfig = JsonConvert.DeserializeObject<ConquerToolsConfig>(File.ReadAllText(FileConfigName));
             }
-        }
-
-        public void ItemtypeEncrypt(string filename, string filenameOutput)
-        {
-            ConquerDatFile dc = new ConquerDatFile(ConquerDatFile.DatFileType.ITEMTYPE);
-            SelectedDatFile = dc;
-            byte[] output = dc.Encrypt(File.ReadAllBytes(filename));
-            File.WriteAllBytes(filenameOutput, output);
-        }
-
-        public void ItemtypeDecrypt(string filename, string filenameOutput)
-        {
-            ConquerDatFile dc = new ConquerDatFile(ConquerDatFile.DatFileType.ITEMTYPE);
-            SelectedDatFile = dc;
-            byte[] output = dc.Decrypt(File.ReadAllBytes(filename));
-            File.WriteAllBytes(filenameOutput, output);
         }
 
         public void AutoDetectionEncrypt(string filename, string filenameOutput)
@@ -118,8 +141,28 @@ namespace ConquerToolsKit
         {
             ConquerDatFile dc = new ConquerDatFile(filename);
             SelectedDatFile = dc;
-            byte[] output = dc.Decrypt(File.ReadAllBytes(filename));
-            File.WriteAllBytes(filenameOutput, output);
+            DatFileConfig datFileConfig = ConquerToolsHelper.CTools.CurrentConfig.DatFilesConfig.Where(x => x.Key == dc.CurrentDatFileType).FirstOrDefault().Value;
+            if (datFileConfig != null)
+            {
+                if (datFileConfig.FileType == ConquerDatFile.DatFileType.LEVELEXP)
+                {
+                    CO2_CORE_DLL.IO.LevelExp le = new CO2_CORE_DLL.IO.LevelExp();
+                    le.LoadFromDat(filename);
+                    le.SaveToTxt(filenameOutput);
+                } else
+                {
+                    if (datFileConfig.FileType == ConquerDatFile.DatFileType.AUTOLOOT)
+                    {
+                        CO2_CORE_DLL.IO.AutoAllot aLoot = new CO2_CORE_DLL.IO.AutoAllot();
+                        aLoot.LoadFromDat(filename);
+                        aLoot.SaveToTxt(filenameOutput);
+                    } else
+                    {
+                        byte[] output = dc.Decrypt(File.ReadAllBytes(filename));
+                        File.WriteAllBytes(filenameOutput, output);
+                    }
+                }
+            }
         }
 
         public void CustomEncrypt(string filename, string filenameOutput, ConquerDatFile.DatFileType datFileType)
@@ -134,24 +177,46 @@ namespace ConquerToolsKit
         {
             ConquerDatFile dc = new ConquerDatFile(datFileType);
             SelectedDatFile = dc;
-            byte[] output = dc.Decrypt(File.ReadAllBytes(filename));
-            File.WriteAllBytes(filenameOutput, output);
+            DatFileConfig datFileConfig = ConquerToolsHelper.CTools.CurrentConfig.DatFilesConfig.Where(x => x.Key == dc.CurrentDatFileType).FirstOrDefault().Value;
+            if (datFileConfig != null)
+            {
+                if (datFileConfig.FileType == ConquerDatFile.DatFileType.LEVELEXP)
+                {
+                    CO2_CORE_DLL.IO.LevelExp le = new CO2_CORE_DLL.IO.LevelExp();
+                    le.LoadFromDat(filename);
+                    le.SaveToTxt(filenameOutput);
+                }
+                else
+                {
+                    if (datFileConfig.FileType == ConquerDatFile.DatFileType.AUTOLOOT)
+                    {
+                        CO2_CORE_DLL.IO.AutoAllot aLoot = new CO2_CORE_DLL.IO.AutoAllot();
+                        aLoot.LoadFromDat(filename);
+                        aLoot.SaveToTxt(filenameOutput);
+                    } else
+                    {
+                        byte[] output = dc.Decrypt(File.ReadAllBytes(filename));
+                        File.WriteAllBytes(filenameOutput, output);
+                    }
+                }
+            }
         }
 
         public void GenerateTable(string[] FileContent, DataGridView dgContent, ConquerDatFile datCrypto, bool RAWMode = false)
         {
             DataTable dt = null;
+            DatFileConfig datFileConfig = ConquerToolsHelper.CTools.CurrentConfig.DatFilesConfig.Where(x => x.Key == datCrypto.CurrentDatFileType).FirstOrDefault().Value;
             if (RAWMode)
             {
                 dt = RAWTableFromStrings(FileContent);
             } else
             {
-                dt = TableFromStrings(FileContent, ConquerToolsHelper.CTools.CurrentConfig.DatFilesConfig.Where(x => x.Key == datCrypto.CurrentDatFileType).FirstOrDefault().Value.Separators);
+                dt = TableFromStrings(FileContent, datFileConfig);
             }
             dgContent.DataSource = dt;
         }
 
-        public DataTable TableFromStrings(string[] lines, char[] separator)
+        public DataTable TableFromStrings(string[] lines, DatFileConfig datFileConfig)
         {
             DataTable dt = new DataTable();
 
@@ -161,7 +226,7 @@ namespace ConquerToolsKit
             {
                 foreach (string currentLine in lines)
                 {
-                    int maxParTmp = currentLine.Split(separator, System.StringSplitOptions.RemoveEmptyEntries).Length;
+                    int maxParTmp = currentLine.Split(datFileConfig.Separators, StringSplitOptions.RemoveEmptyEntries).Length;
                     if (maxParTmp > maxPar)
                     {
                         maxPar = maxParTmp;
@@ -177,13 +242,20 @@ namespace ConquerToolsKit
 
             for (int i = 0; i < maxPar; i++)
             {
-                dt.Columns.Add(new DataColumn("#" + i.ToString()));
+                if (datFileConfig.FileHeaders != null && datFileConfig.FileHeaders.Length > i)
+                {
+                    dt.Columns.Add(new DataColumn(datFileConfig.FileHeaders[i]));
+                }
+                else
+                {
+                    dt.Columns.Add(new DataColumn("#" + i.ToString()));
+                }
             }
 
             foreach (string currentLine in lines)
             {
                 dt.NewRow();
-                string[] lineSplit = currentLine.Split(separator, System.StringSplitOptions.RemoveEmptyEntries);
+                string[] lineSplit = currentLine.Split(datFileConfig.Separators, StringSplitOptions.RemoveEmptyEntries);
                 List<string> lineColumns = new List<string>();
                 foreach (string line in lineSplit)
                 {
@@ -224,23 +296,27 @@ namespace ConquerToolsKit
         {
             Filename = filename;
             FindDatTypeByFilename();
-            FindEncryptionKeyByFileType();
-            Init();
+            if (FindEncryptionKeyByFileType())
+            {
+                Init();
+            }
         }
 
         public ConquerDatFile(DatFileType datFileType)
         {
             CurrentDatFileType = datFileType;
-            FindEncryptionKeyByFileType();
-            Init();
+            if (FindEncryptionKeyByFileType())
+            {
+                Init();
+            }
         }
 
         public void Init()
         {
-            string seed = Enum.Format(typeof(EncryptionKey), CurrentEncryptionKey, "d");
-            int.TryParse(seed, NumberStyles.HexNumber, null, out int fixedSeed);
+            string k = CurrentEncryptionKey.ToString("d");
+            uint.TryParse(k, NumberStyles.Number, null, out uint fixedSeed);
             key = new byte[0x80];
-            MSRandom r = new MSRandom(fixedSeed);
+            CO2_CORE_DLL.MSRandom r = new CO2_CORE_DLL.MSRandom(fixedSeed);
             for (int i = 0; i < key.Length; i++)
             {
                 key[i] = (byte)(r.Next() % 0x100);
@@ -297,23 +373,49 @@ namespace ConquerToolsKit
                         CurrentDatFileType = DatFileType.MAGICTYPEOP;
                         break;
                     }
+                case "levelexp":
+                    {
+                        CurrentDatFileType = DatFileType.LEVELEXP;
+                        break;
+                    }
+                case "levexp":
+                    {
+                        CurrentDatFileType = DatFileType.LEVEXP;
+                        break;
+                    }
+                case "autoallot":
+                    {
+                        CurrentDatFileType = DatFileType.AUTOLOOT;
+                        break;
+                    }
             }
         }
         
         /// <summary>
         /// Find the current encryption key for current filetype
         /// </summary>
-        private void FindEncryptionKeyByFileType()
+        private bool FindEncryptionKeyByFileType()
         {
-            CurrentEncryptionKey = ConquerToolsHelper.CTools.CurrentConfig.DatFilesConfig.Where(x => x.Key == CurrentDatFileType).FirstOrDefault().Value.EncryptionKey;
+            bool Success = false;
+            KeyValuePair<DatFileType, DatFileConfig> kvp = ConquerToolsHelper.CTools.CurrentConfig.DatFilesConfig.Where(x => x.Key == CurrentDatFileType).FirstOrDefault();
+            if (kvp.Key != DatFileType.AUTODETECT)
+            {
+                CurrentEncryptionKey = kvp.Value.EncryptionKey;
+                Success = true;
+            } else
+            {
+                MessageBox.Show("Sorry, this file is not compatible with this software.", Assembly.GetCallingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            return Success;
         }
         
         /// <summary>
-        /// Available encryption keys for dat files
+        /// Available encryption keys for dat files. In INTEGER format.
         /// </summary>
         public enum EncryptionKey
         {
-            COMMON = 2537,
+            CUSTOM = 0,
+            COMMON = 9527,
             ALTERNATIVE = 1234,
         }
 
@@ -327,23 +429,9 @@ namespace ConquerToolsKit
             MONSTER,
             MAGICTYPE,
             MAGICTYPEOP,
-        }
-    }
-
-
-    /// <summary>
-    /// Generate a Random Seed
-    /// </summary>
-    public class MSRandom
-    {
-        public long Seed;
-        public MSRandom(int seed)
-        {
-            Seed = seed;
-        }
-        public int Next()
-        {
-            return (int)(((Seed = Seed * 214013L + 2531011L) >> 16) & 0x7fff);
+            LEVELEXP,
+            LEVEXP,
+            AUTOLOOT,
         }
     }
 
@@ -371,6 +459,7 @@ namespace ConquerToolsKit
         public ConquerDatFile.DatFileType FileType { get; set; }
         public ConquerDatFile.EncryptionKey EncryptionKey { get; set; }
         public char[] Separators { get; set; }
+        public string[] FileHeaders { get; set; }
     }
 
     /// <summary>
