@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -17,70 +20,131 @@ namespace ConquerToolsKit
      */
     public class ConquerTools
     {
-        public DatCrypto SelectedDatFile { get; set; }
+        public ConquerDatFile SelectedDatFile { get; set; }
+        public ConquerToolsConfig CurrentConfig { get; set; }
+
+        public ConquerTools()
+        {
+            Init();
+        }
+
+        public ConquerTools(ConquerDatFile selectedDatFile)
+        {
+            SelectedDatFile = selectedDatFile;
+            Init();
+        }
+
+        public void Init()
+        {
+            string FileConfigName = "ctk.config.json";
+            if (!File.Exists(FileConfigName))
+            {
+                Dictionary<ConquerDatFile.DatFileType, DatFileConfig> d = new Dictionary<ConquerDatFile.DatFileType, DatFileConfig>
+                {
+                    {
+                        ConquerDatFile.DatFileType.ITEMTYPE,
+                        new DatFileConfig()
+                        {
+                            FileType = ConquerDatFile.DatFileType.ITEMTYPE,
+                            EncryptionKey = ConquerDatFile.EncryptionKey.COMMON,
+                            Separators = new char[] { '@', '@' }
+                        }
+                    },
+                    {
+                        ConquerDatFile.DatFileType.MAGICTYPE,
+                        new DatFileConfig()
+                        {
+                            FileType = ConquerDatFile.DatFileType.MAGICTYPE,
+                            EncryptionKey = ConquerDatFile.EncryptionKey.COMMON,
+                            Separators = new char[] { '@', '@' }
+                        }
+                    },
+                    {
+                        ConquerDatFile.DatFileType.MAGICTYPEOP,
+                        new DatFileConfig()
+                        {
+                            FileType = ConquerDatFile.DatFileType.MAGICTYPEOP,
+                            EncryptionKey = ConquerDatFile.EncryptionKey.COMMON,
+                            Separators = new char[] { ',' }
+                        }
+                    },
+                    {
+                        ConquerDatFile.DatFileType.MONSTER,
+                        new DatFileConfig()
+                        {
+                            FileType = ConquerDatFile.DatFileType.MONSTER,
+                            EncryptionKey = ConquerDatFile.EncryptionKey.COMMON,
+                            Separators = null
+                        }
+                    }
+                };
+
+                ConquerToolsConfig c = new ConquerToolsConfig(d);
+                File.WriteAllText(FileConfigName, JsonConvert.SerializeObject(c));
+                CurrentConfig = c;
+            } else
+            {
+                CurrentConfig = JsonConvert.DeserializeObject<ConquerToolsConfig>(File.ReadAllText(FileConfigName));
+            }
+        }
+
+        public void ItemtypeEncrypt(string filename, string filenameOutput)
+        {
+            ConquerDatFile dc = new ConquerDatFile(ConquerDatFile.DatFileType.ITEMTYPE);
+            SelectedDatFile = dc;
+            byte[] output = dc.Encrypt(File.ReadAllBytes(filename));
+            File.WriteAllBytes(filenameOutput, output);
+        }
 
         public void ItemtypeDecrypt(string filename, string filenameOutput)
         {
-            DatCrypto dc = new DatCrypto(DatCrypto.EncryptionKey.COMMON);
+            ConquerDatFile dc = new ConquerDatFile(ConquerDatFile.DatFileType.ITEMTYPE);
             SelectedDatFile = dc;
             byte[] output = dc.Decrypt(File.ReadAllBytes(filename));
             File.WriteAllBytes(filenameOutput, output);
         }
-        public void ItemtypeEncrypt(string filename, string filenameOutput)
-        {
-            DatCrypto dc = new DatCrypto(DatCrypto.EncryptionKey.COMMON);
-            SelectedDatFile = dc;
-            byte[] output = dc.Encrypt(File.ReadAllBytes(filename));
-            File.WriteAllBytes(filenameOutput, output);
-        }
+
         public void AutoDetectionEncrypt(string filename, string filenameOutput)
         {
-            DatCrypto dc = new DatCrypto(filename);
+            ConquerDatFile dc = new ConquerDatFile(filename);
             SelectedDatFile = dc;
             byte[] output = dc.Encrypt(File.ReadAllBytes(filename));
             File.WriteAllBytes(filenameOutput, output);
         }
+
         public void AutoDetectionDecrypt(string filename, string filenameOutput)
         {
-            DatCrypto dc = new DatCrypto(filename);
+            ConquerDatFile dc = new ConquerDatFile(filename);
             SelectedDatFile = dc;
             byte[] output = dc.Decrypt(File.ReadAllBytes(filename));
             File.WriteAllBytes(filenameOutput, output);
         }
-        
-        public void GenerateTable(string[] FileContent, DataGridView dgContent, DatCrypto datCrypto, bool RAWMode = false)
+
+        public void CustomEncrypt(string filename, string filenameOutput, ConquerDatFile.DatFileType datFileType)
         {
-            // TODO config of dat file type from a json
+            ConquerDatFile dc = new ConquerDatFile(datFileType);
+            SelectedDatFile = dc;
+            byte[] output = dc.Encrypt(File.ReadAllBytes(filename));
+            File.WriteAllBytes(filenameOutput, output);
+        }
+
+        public void CustomDecrypt(string filename, string filenameOutput, ConquerDatFile.DatFileType datFileType)
+        {
+            ConquerDatFile dc = new ConquerDatFile(datFileType);
+            SelectedDatFile = dc;
+            byte[] output = dc.Decrypt(File.ReadAllBytes(filename));
+            File.WriteAllBytes(filenameOutput, output);
+        }
+
+        public void GenerateTable(string[] FileContent, DataGridView dgContent, ConquerDatFile datCrypto, bool RAWMode = false)
+        {
             DataTable dt = null;
             if (RAWMode)
             {
                 dt = RAWTableFromStrings(FileContent);
             } else
             {
-                switch (datCrypto.CurrentDatFileType)
-                {
-                    case DatCrypto.DatFileType.ITEMTYPE:
-                    case DatCrypto.DatFileType.MAGICTYPE:
-                        {
-                            dt = TableFromStrings(FileContent, new char[] { '@', '@' });
-                            break;
-                        }
-                    case DatCrypto.DatFileType.MAGICTYPEOP:
-                        {
-                            dt = TableFromStrings(FileContent, new char[] { ',' });
-                            break;
-                        }
-                    case DatCrypto.DatFileType.MONSTER:
-                        {
-                            dt = TableFromStrings(FileContent, new char[] { ' ' });
-                            break;
-                        }
-                    default:
-                        {
-                            dt = TableFromStrings(FileContent, new char[] { ' ' });
-                            break;
-                        }
-                }
+                dt = TableFromStrings(FileContent, ConquerToolsHelper.CTools.CurrentConfig.DatFilesConfig.Where(x => x.Key == datCrypto.CurrentDatFileType).FirstOrDefault().Value.Separators);
             }
             dgContent.DataSource = dt;
         }
@@ -108,12 +172,12 @@ namespace ConquerToolsKit
             {
                 MessageBox.Show("This file may not be entirely correct", Assembly.GetCallingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            
+
             for (int i = 0; i < maxPar; i++)
             {
                 dt.Columns.Add(new DataColumn("#" + i.ToString()));
             }
-            
+
             foreach (string currentLine in lines)
             {
                 dt.NewRow();
@@ -141,11 +205,11 @@ namespace ConquerToolsKit
             return dt;
         }
     }
-    
+
     /// <summary>
     /// Conquer .dat Files Encrypt/Decrypt
     /// </summary>
-    public class DatCrypto
+    public class ConquerDatFile
     {
         byte[] key;
         public EncryptionKey CurrentEncryptionKey { get; set; }
@@ -154,28 +218,23 @@ namespace ConquerToolsKit
         /// <summary>
         /// Auto Detect key based in filename
         /// </summary>
-        public DatCrypto(string filename)
+        public ConquerDatFile(string filename)
         {
             Filename = filename;
-            FindEncryptionKeyByFilename();
-            Init(CurrentEncryptionKey);
+            FindDatTypeByFilename();
+            FindEncryptionKeyByFileType();
+            Init();
         }
-        public DatCrypto(EncryptionKey seed)
+        public ConquerDatFile(DatFileType datFileType)
         {
-            Init(seed);
+            CurrentDatFileType = datFileType;
+            FindEncryptionKeyByFileType();
+            Init();
         }
-        public void Init(EncryptionKey seed)
+        public void Init()
         {
-            CurrentEncryptionKey = seed;
-            int fixedSeed = 0;
-            if (CurrentEncryptionKey == EncryptionKey.AUTODETECT)
-            {
-                int.TryParse(CurrentEncryptionKey.ToString(), NumberStyles.HexNumber, null, out fixedSeed);
-            }
-            else
-            {
-                int.TryParse(((int)seed).ToString(), NumberStyles.HexNumber, null, out fixedSeed);
-            }
+            string seed = Enum.Format(typeof(EncryptionKey), CurrentEncryptionKey, "d");
+            int.TryParse(seed, NumberStyles.HexNumber, null, out int fixedSeed);
             key = new byte[0x80];
             MSRandom r = new MSRandom(fixedSeed);
             for (int i = 0; i < key.Length; i++)
@@ -204,43 +263,41 @@ namespace ConquerToolsKit
             return b;
         }
 
-        private void FindEncryptionKeyByFilename()
+        private void FindDatTypeByFilename()
         {
-            CurrentDatFileType = DatFileType.AUTODETECT;
-            // TODO key of dat file from a json
-            string name = Path.GetFileNameWithoutExtension(Filename);
+            string name = Path.GetFileNameWithoutExtension(Filename).ToLower();
             switch (name)
             {
                 case "itemtype":
                     {
-                        CurrentEncryptionKey = EncryptionKey.COMMON;
                         CurrentDatFileType = DatFileType.ITEMTYPE;
                         break;
                     }
                 case "monster":
                     {
-                        CurrentEncryptionKey = EncryptionKey.COMMON;
                         CurrentDatFileType = DatFileType.MONSTER;
                         break;
                     }
-                case "MagicType":
+                case "magictype":
                     {
-                        CurrentEncryptionKey = EncryptionKey.COMMON;
                         CurrentDatFileType = DatFileType.MAGICTYPE;
                         break;
                     }
                 case "magictypeop":
                     {
-                        CurrentEncryptionKey = EncryptionKey.COMMON;
                         CurrentDatFileType = DatFileType.MAGICTYPEOP;
                         break;
                     }
             }
         }
 
+        private void FindEncryptionKeyByFileType()
+        {
+            CurrentEncryptionKey = ConquerToolsHelper.CTools.CurrentConfig.DatFilesConfig.Where(x => x.Key == CurrentDatFileType).FirstOrDefault().Value.EncryptionKey;
+        }
+
         public enum EncryptionKey
         {
-            AUTODETECT = 0,
             COMMON = 2537,
             ALTERNATIVE = 1234,
         }
@@ -270,5 +327,28 @@ namespace ConquerToolsKit
         {
             return (int)(((Seed = Seed * 214013L + 2531011L) >> 16) & 0x7fff);
         }
+    }
+
+    public class ConquerToolsConfig
+    {
+        public Dictionary<ConquerDatFile.DatFileType, DatFileConfig> DatFilesConfig { get; set; }
+
+        public DateTime CreationDate = DateTime.Now;
+
+        public ConquerToolsConfig(Dictionary<ConquerDatFile.DatFileType, DatFileConfig> datFilesConfig)
+        {
+            DatFilesConfig = datFilesConfig;
+        }
+    }
+
+    public class DatFileConfig
+    {
+        public ConquerDatFile.DatFileType FileType { get; set; }
+        public ConquerDatFile.EncryptionKey EncryptionKey { get; set; }
+        public char[] Separators { get; set; }
+    }
+
+    public static class ConquerToolsHelper {
+        public static ConquerTools CTools;
     }
 }

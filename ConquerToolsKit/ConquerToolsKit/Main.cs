@@ -1,58 +1,56 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using static ConquerToolsKit.ConquerDatFile;
 
 namespace ConquerToolsKit
 {
     public partial class Main : MetroFramework.Forms.MetroForm
     {
-        private ConquerTools ctools;
         public Main()
         {
             InitializeComponent();
-            ctools = new ConquerTools();
+            ConquerToolsHelper.CTools = new ConquerTools();
         }
 
         private void Main_Load(object sender, EventArgs e)
         {
-            cbxDatFileType.DataSource = Enum.GetNames(typeof(DatCrypto.DatFileType));
-        }
-
-        private void BtnDecrypt_Click(object sender, EventArgs e)
-        {
-            selectFile.Filter = "Encrypted Conquer Itemtype File|*.dat";
-            DialogResult dres = selectFile.ShowDialog();
-            if (dres == DialogResult.OK)
-            {
-                ctools.ItemtypeDecrypt(selectFile.FileName, Path.ChangeExtension(selectFile.FileName, "txt"));
-            }
-        }
-
-        private void BtnEncrypt_Click(object sender, EventArgs e)
-        {
-            selectFile.Filter = "Decrypted Conquer Itemtype File|*.txt";
-            DialogResult dres = selectFile.ShowDialog();
-            if (dres == DialogResult.OK)
-            {
-                ctools.ItemtypeEncrypt(selectFile.FileName, Path.ChangeExtension(selectFile.FileName, "dat"));
-            }
+            cbxDatFileType.DataSource = Enum.GetNames(typeof(DatFileType));
         }
 
         private void SelectFile_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            lblSelectedFile.Text = "Selected File: " + selectFile.FileName;
+            lblSelectedDatFile.Text = "Selected File: " + selectFile.FileName;
         }
 
         private void BtnDecryptDat_Click(object sender, EventArgs e)
         {
             selectFile.Filter = "Encrypted Conquer Dat File|*.dat";
-            ctools.AutoDetectionDecrypt(ctools.SelectedDatFile.Filename, Path.ChangeExtension(selectFile.FileName, "txt"));
+            string filenameOutput = Path.ChangeExtension(selectFile.FileName, "txt");
+            Enum.TryParse(cbxDatFileType.SelectedItem.ToString(), out DatFileType datFileType);
+            if (datFileType == DatFileType.AUTODETECT)
+            {
+                ConquerToolsHelper.CTools.AutoDetectionDecrypt(selectFile.FileName, filenameOutput);
+            }
+            else
+            {
+                ConquerToolsHelper.CTools.CustomDecrypt(selectFile.FileName, filenameOutput, datFileType);
+            }
         }
 
         private void BtnEncryptDat_Click(object sender, EventArgs e)
         {
             selectFile.Filter = "Decrypted Conquer Dat File|*.txt";
-            ctools.AutoDetectionEncrypt(ctools.SelectedDatFile.Filename, Path.ChangeExtension(selectFile.FileName, "dat"));
+            string filenameOutput = Path.ChangeExtension(selectFile.FileName, "dat");
+            Enum.TryParse(cbxDatFileType.SelectedItem.ToString(), out DatFileType datFileType);
+            if (datFileType == DatFileType.AUTODETECT)
+            {
+                ConquerToolsHelper.CTools.AutoDetectionDecrypt(selectFile.FileName, filenameOutput);
+            }
+            else
+            {
+                ConquerToolsHelper.CTools.CustomDecrypt(selectFile.FileName, filenameOutput, datFileType);
+            }
         }
 
         private void BtnOpenFile_Click(object sender, EventArgs e)
@@ -61,12 +59,18 @@ namespace ConquerToolsKit
             DialogResult dres = selectFile.ShowDialog();
             if (dres == DialogResult.OK)
             {
-                lblSelectedDatFile.Text = "Selected File: " + selectFile.FileName;
                 string filenameOutput = Path.ChangeExtension(selectFile.FileName, "txt");
-                ctools.AutoDetectionDecrypt(selectFile.FileName, filenameOutput);
-                cbxDatFileType.SelectedItem = ctools.SelectedDatFile.CurrentDatFileType.ToString();
+                Enum.TryParse(cbxDatFileType.SelectedItem.ToString(), out DatFileType datFileType);
+                if (datFileType == DatFileType.AUTODETECT)
+                {
+                    ConquerToolsHelper.CTools.AutoDetectionDecrypt(selectFile.FileName, filenameOutput);
+                } else
+                {
+                    ConquerToolsHelper.CTools.CustomDecrypt(selectFile.FileName, filenameOutput, datFileType);
+                }
+                cbxDatFileType.SelectedItem = ConquerToolsHelper.CTools.SelectedDatFile.CurrentDatFileType.ToString();
                 string[] lines = File.ReadAllLines(filenameOutput);
-                ctools.GenerateTable(lines, dgvAdvanced, ctools.SelectedDatFile, tglRawMode.Checked);
+                ConquerToolsHelper.CTools.GenerateTable(lines, dgvAdvanced, ConquerToolsHelper.CTools.SelectedDatFile, tglRawMode.Checked);
             }
         }
     }

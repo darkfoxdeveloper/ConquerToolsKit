@@ -31,10 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.tabTools = new MetroFramework.Controls.MetroTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.lblSelectedFile = new MetroFramework.Controls.MetroLabel();
-            this.btnEncrypt = new MetroFramework.Controls.MetroButton();
-            this.btnDecrypt = new MetroFramework.Controls.MetroButton();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lblRawMode = new MetroFramework.Controls.MetroLabel();
             this.tglRawMode = new MetroFramework.Controls.MetroToggle();
             this.dgvAdvanced = new System.Windows.Forms.DataGridView();
             this.lblSelectedDatFile = new MetroFramework.Controls.MetroLabel();
@@ -42,17 +39,15 @@
             this.cbxDatFileType = new MetroFramework.Controls.MetroComboBox();
             this.btnEncryptDat = new MetroFramework.Controls.MetroButton();
             this.btnDecryptDat = new MetroFramework.Controls.MetroButton();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.lblAbout = new MetroFramework.Controls.MetroLabel();
             this.mainPanel = new MetroFramework.Controls.MetroPanel();
             this.selectFile = new System.Windows.Forms.OpenFileDialog();
             this.mainIcon = new System.Windows.Forms.PictureBox();
-            this.lblRawMode = new MetroFramework.Controls.MetroLabel();
             this.tabTools.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdvanced)).BeginInit();
-            this.tabPage3.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainIcon)).BeginInit();
             this.SuspendLayout();
@@ -61,70 +56,37 @@
             // 
             this.tabTools.Controls.Add(this.tabPage1);
             this.tabTools.Controls.Add(this.tabPage2);
-            this.tabTools.Controls.Add(this.tabPage3);
             this.tabTools.Location = new System.Drawing.Point(3, 3);
             this.tabTools.Name = "tabTools";
-            this.tabTools.SelectedIndex = 1;
+            this.tabTools.SelectedIndex = 0;
             this.tabTools.Size = new System.Drawing.Size(794, 382);
             this.tabTools.TabIndex = 0;
             this.tabTools.UseSelectable = true;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.lblSelectedFile);
-            this.tabPage1.Controls.Add(this.btnEncrypt);
-            this.tabPage1.Controls.Add(this.btnDecrypt);
+            this.tabPage1.Controls.Add(this.lblRawMode);
+            this.tabPage1.Controls.Add(this.tglRawMode);
+            this.tabPage1.Controls.Add(this.dgvAdvanced);
+            this.tabPage1.Controls.Add(this.lblSelectedDatFile);
+            this.tabPage1.Controls.Add(this.btnOpenFile);
+            this.tabPage1.Controls.Add(this.cbxDatFileType);
+            this.tabPage1.Controls.Add(this.btnEncryptDat);
+            this.tabPage1.Controls.Add(this.btnDecryptDat);
             this.tabPage1.Location = new System.Drawing.Point(4, 38);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Size = new System.Drawing.Size(786, 340);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Itemtype";
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Editor";
             // 
-            // lblSelectedFile
+            // lblRawMode
             // 
-            this.lblSelectedFile.AutoSize = true;
-            this.lblSelectedFile.BackColor = System.Drawing.Color.Transparent;
-            this.lblSelectedFile.Location = new System.Drawing.Point(15, 45);
-            this.lblSelectedFile.Name = "lblSelectedFile";
-            this.lblSelectedFile.Size = new System.Drawing.Size(95, 19);
-            this.lblSelectedFile.TabIndex = 2;
-            this.lblSelectedFile.Text = "Selected File: -";
-            // 
-            // btnEncrypt
-            // 
-            this.btnEncrypt.Location = new System.Drawing.Point(105, 15);
-            this.btnEncrypt.Name = "btnEncrypt";
-            this.btnEncrypt.Size = new System.Drawing.Size(75, 23);
-            this.btnEncrypt.TabIndex = 1;
-            this.btnEncrypt.Text = "Encrypt";
-            this.btnEncrypt.UseSelectable = true;
-            this.btnEncrypt.Click += new System.EventHandler(this.BtnEncrypt_Click);
-            // 
-            // btnDecrypt
-            // 
-            this.btnDecrypt.Location = new System.Drawing.Point(15, 15);
-            this.btnDecrypt.Name = "btnDecrypt";
-            this.btnDecrypt.Size = new System.Drawing.Size(75, 23);
-            this.btnDecrypt.TabIndex = 0;
-            this.btnDecrypt.Text = "Decrypt";
-            this.btnDecrypt.UseSelectable = true;
-            this.btnDecrypt.Click += new System.EventHandler(this.BtnDecrypt_Click);
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.lblRawMode);
-            this.tabPage2.Controls.Add(this.tglRawMode);
-            this.tabPage2.Controls.Add(this.dgvAdvanced);
-            this.tabPage2.Controls.Add(this.lblSelectedDatFile);
-            this.tabPage2.Controls.Add(this.btnOpenFile);
-            this.tabPage2.Controls.Add(this.cbxDatFileType);
-            this.tabPage2.Controls.Add(this.btnEncryptDat);
-            this.tabPage2.Controls.Add(this.btnDecryptDat);
-            this.tabPage2.Location = new System.Drawing.Point(4, 38);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(786, 340);
-            this.tabPage2.TabIndex = 2;
-            this.tabPage2.Text = "Advanced";
+            this.lblRawMode.AutoSize = true;
+            this.lblRawMode.Location = new System.Drawing.Point(595, 65);
+            this.lblRawMode.Name = "lblRawMode";
+            this.lblRawMode.Size = new System.Drawing.Size(87, 19);
+            this.lblRawMode.TabIndex = 9;
+            this.lblRawMode.Text = "Show in RAW";
             // 
             // tglRawMode
             // 
@@ -197,14 +159,14 @@
             this.btnDecryptDat.UseSelectable = true;
             this.btnDecryptDat.Click += new System.EventHandler(this.BtnDecryptDat_Click);
             // 
-            // tabPage3
+            // tabPage2
             // 
-            this.tabPage3.Controls.Add(this.lblAbout);
-            this.tabPage3.Location = new System.Drawing.Point(4, 38);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(786, 340);
-            this.tabPage3.TabIndex = 1;
-            this.tabPage3.Text = "About";
+            this.tabPage2.Controls.Add(this.lblAbout);
+            this.tabPage2.Location = new System.Drawing.Point(4, 38);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(786, 340);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "About";
             // 
             // lblAbout
             // 
@@ -243,15 +205,6 @@
             this.mainIcon.TabIndex = 2;
             this.mainIcon.TabStop = false;
             // 
-            // lblRawMode
-            // 
-            this.lblRawMode.AutoSize = true;
-            this.lblRawMode.Location = new System.Drawing.Point(595, 65);
-            this.lblRawMode.Name = "lblRawMode";
-            this.lblRawMode.Size = new System.Drawing.Size(87, 19);
-            this.lblRawMode.TabIndex = 9;
-            this.lblRawMode.Text = "Show in RAW";
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -268,11 +221,9 @@
             this.tabTools.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAdvanced)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAdvanced)).EndInit();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
             this.mainPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainIcon)).EndInit();
             this.ResumeLayout(false);
@@ -282,16 +233,12 @@
         #endregion
 
         private MetroFramework.Controls.MetroTabControl tabTools;
-        private System.Windows.Forms.TabPage tabPage1;
         private MetroFramework.Controls.MetroPanel mainPanel;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.OpenFileDialog selectFile;
-        private MetroFramework.Controls.MetroButton btnDecrypt;
-        private MetroFramework.Controls.MetroButton btnEncrypt;
-        private MetroFramework.Controls.MetroLabel lblSelectedFile;
         private MetroFramework.Controls.MetroLabel lblAbout;
         private System.Windows.Forms.PictureBox mainIcon;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage1;
         private MetroFramework.Controls.MetroButton btnEncryptDat;
         private MetroFramework.Controls.MetroButton btnDecryptDat;
         private MetroFramework.Controls.MetroComboBox cbxDatFileType;
