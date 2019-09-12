@@ -11,6 +11,8 @@ using System.Windows.Forms;
 namespace ConquerToolsKit
 {
     /*
+     * Some keys used in this App for decrypt dat files. Program created by DaRkFox
+     * --------------
      * LevExp = 4D2
      * Silent = 2537
      * MapDestination = 2537
@@ -225,12 +227,14 @@ namespace ConquerToolsKit
             FindEncryptionKeyByFileType();
             Init();
         }
+
         public ConquerDatFile(DatFileType datFileType)
         {
             CurrentDatFileType = datFileType;
             FindEncryptionKeyByFileType();
             Init();
         }
+
         public void Init()
         {
             string seed = Enum.Format(typeof(EncryptionKey), CurrentEncryptionKey, "d");
@@ -242,6 +246,7 @@ namespace ConquerToolsKit
                 key[i] = (byte)(r.Next() % 0x100);
             }
         }
+
         public byte[] Decrypt(byte[] b)
         {
             for (int i = 0; i < b.Length; i++)
@@ -252,6 +257,7 @@ namespace ConquerToolsKit
             }
             return b;
         }
+
         public byte[] Encrypt(byte[] b)
         {
             for (int i = 0; i < b.Length; i++)
@@ -262,7 +268,10 @@ namespace ConquerToolsKit
             }
             return b;
         }
-
+        
+        /// <summary>
+        /// Find the current dat type using the current filename
+        /// </summary>
         private void FindDatTypeByFilename()
         {
             string name = Path.GetFileNameWithoutExtension(Filename).ToLower();
@@ -290,18 +299,27 @@ namespace ConquerToolsKit
                     }
             }
         }
-
+        
+        /// <summary>
+        /// Find the current encryption key for current filetype
+        /// </summary>
         private void FindEncryptionKeyByFileType()
         {
             CurrentEncryptionKey = ConquerToolsHelper.CTools.CurrentConfig.DatFilesConfig.Where(x => x.Key == CurrentDatFileType).FirstOrDefault().Value.EncryptionKey;
         }
-
+        
+        /// <summary>
+        /// Available encryption keys for dat files
+        /// </summary>
         public enum EncryptionKey
         {
             COMMON = 2537,
             ALTERNATIVE = 1234,
         }
 
+        /// <summary>
+        /// Types of dat file
+        /// </summary>
         public enum DatFileType
         {
             AUTODETECT = 0,
@@ -329,6 +347,10 @@ namespace ConquerToolsKit
         }
     }
 
+
+    /// <summary>
+    /// App Configuration
+    /// </summary>
     public class ConquerToolsConfig
     {
         public Dictionary<ConquerDatFile.DatFileType, DatFileConfig> DatFilesConfig { get; set; }
@@ -341,6 +363,9 @@ namespace ConquerToolsKit
         }
     }
 
+    /// <summary>
+    /// Configuration for Dat File
+    /// </summary>
     public class DatFileConfig
     {
         public ConquerDatFile.DatFileType FileType { get; set; }
@@ -348,6 +373,9 @@ namespace ConquerToolsKit
         public char[] Separators { get; set; }
     }
 
+    /// <summary>
+    /// Helper for call other classes
+    /// </summary>
     public static class ConquerToolsHelper {
         public static ConquerTools CTools;
     }
