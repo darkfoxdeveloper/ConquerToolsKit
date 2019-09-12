@@ -45,11 +45,11 @@ namespace ConquerToolsKit
             Enum.TryParse(cbxDatFileType.SelectedItem.ToString(), out DatFileType datFileType);
             if (datFileType == DatFileType.AUTODETECT)
             {
-                ConquerToolsHelper.CTools.AutoDetectionDecrypt(selectFile.FileName, filenameOutput);
+                ConquerToolsHelper.CTools.AutoDetectionEncrypt(selectFile.FileName, filenameOutput);
             }
             else
             {
-                ConquerToolsHelper.CTools.CustomDecrypt(selectFile.FileName, filenameOutput, datFileType);
+                ConquerToolsHelper.CTools.CustomEncrypt(selectFile.FileName, filenameOutput, datFileType);
             }
         }
 
@@ -64,15 +64,16 @@ namespace ConquerToolsKit
                 if (datFileType == DatFileType.AUTODETECT)
                 {
                     ConquerToolsHelper.CTools.AutoDetectionDecrypt(selectFile.FileName, filenameOutput);
-                } else
+                }
+                else
                 {
                     ConquerToolsHelper.CTools.CustomDecrypt(selectFile.FileName, filenameOutput, datFileType);
                 }
-                if (File.Exists(filenameOutput))
-                {
-                    string[] lines = File.ReadAllLines(filenameOutput);
-                    ConquerToolsHelper.CTools.GenerateTable(lines, dgvAdvanced, ConquerToolsHelper.CTools.SelectedDatFile, tglRawMode.Checked);
-                }
+                //if (File.Exists(filenameOutput))
+                //{
+                //    string[] lines = File.ReadAllLines(filenameOutput);
+                //    ConquerToolsHelper.CTools.GenerateTable(lines, dgvAdvanced, ConquerToolsHelper.CTools.SelectedDatFile, tglRawMode.Checked);
+                //}
             }
         }
 

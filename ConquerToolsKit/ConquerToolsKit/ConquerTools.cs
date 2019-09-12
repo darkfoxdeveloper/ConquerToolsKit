@@ -128,7 +128,6 @@ namespace ConquerToolsKit
                         }
                     }
                 };
-
                 ConquerToolsConfig c = new ConquerToolsConfig(d);
                 File.WriteAllText(FileConfigName, JsonConvert.SerializeObject(c, Formatting.Indented));
                 CurrentConfig = c;
@@ -142,8 +141,15 @@ namespace ConquerToolsKit
         {
             ConquerDatFile dc = new ConquerDatFile(filename);
             SelectedDatFile = dc;
-            byte[] output = dc.Encrypt(File.ReadAllBytes(filename));
-            File.WriteAllBytes(filenameOutput, output);
+            switch(dc.CurrentDatFileType)
+            {
+                case ConquerDatFile.DatFileType.ITEMTYPE:
+                    {
+                        break;
+                    }
+            }
+            //byte[] output = dc.Encrypt(File.ReadAllBytes(filename));
+            //File.WriteAllBytes(filenameOutput, output);
         }
 
         public void AutoDetectionDecrypt(string filename, string filenameOutput)
@@ -167,8 +173,9 @@ namespace ConquerToolsKit
                         aLoot.SaveToTxt(filenameOutput);
                     } else
                     {
-                        byte[] output = dc.Decrypt(File.ReadAllBytes(filename));
-                        File.WriteAllBytes(filenameOutput, output);
+                        dc.Open();
+                        //byte[] output = dc.Decrypt(File.ReadAllBytes(filename));
+                        //File.WriteAllBytes(filenameOutput, output);
                     }
                 }
             }
@@ -297,6 +304,7 @@ namespace ConquerToolsKit
         byte[] key;
         public EncryptionKey CurrentEncryptionKey { get; set; }
         public DatFileType CurrentDatFileType { get; set; }
+        public List<string> CurrentFileContent { get; set; }
         public string Filename { get; set; }
         /// <summary>
         /// Auto Detect key based in filename
@@ -329,6 +337,18 @@ namespace ConquerToolsKit
             for (int i = 0; i < key.Length; i++)
             {
                 key[i] = (byte)(r.Next() % 0x100);
+            }
+        }
+
+        public void Open()
+        {
+            // TODO create a object with all data of dat file
+            switch (CurrentDatFileType)
+            {
+                case DatFileType.ITEMTYPE:
+                    {
+                        break;
+                    }
             }
         }
 

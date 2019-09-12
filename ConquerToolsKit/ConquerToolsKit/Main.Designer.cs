@@ -101,11 +101,10 @@
             // dgvAdvanced
             // 
             this.dgvAdvanced.AllowUserToAddRows = false;
-            this.dgvAdvanced.AllowUserToDeleteRows = false;
+            this.dgvAdvanced.AllowUserToOrderColumns = true;
             this.dgvAdvanced.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAdvanced.Location = new System.Drawing.Point(15, 90);
             this.dgvAdvanced.Name = "dgvAdvanced";
-            this.dgvAdvanced.ReadOnly = true;
             this.dgvAdvanced.Size = new System.Drawing.Size(755, 233);
             this.dgvAdvanced.TabIndex = 7;
             // 
