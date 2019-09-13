@@ -36,6 +36,9 @@
   <PropertyGroup>
     <ApplicationIcon>co.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CO2_CORE_DLL">
       <HintPath>..\..\RequiredExternalLibs\CO2_CORE_DLL.dll</HintPath>
