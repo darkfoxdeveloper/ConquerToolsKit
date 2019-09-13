@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using static ConquerToolsKit.ConquerDatFile;
 
@@ -40,17 +43,34 @@ namespace ConquerToolsKit
 
         private void BtnEncryptDat_Click(object sender, EventArgs e)
         {
-            selectFile.Filter = "Decrypted Conquer Dat File|*.txt";
-            string filenameOutput = Path.ChangeExtension(selectFile.FileName, "dat");
-            Enum.TryParse(cbxDatFileType.SelectedItem.ToString(), out DatFileType datFileType);
-            if (datFileType == DatFileType.AUTODETECT)
+            // Generate new list with all current data from DataGridView
+            Dictionary<uint, DatFileLine> rowValuesGenerated = new Dictionary<uint, DatFileLine>();
+            StringBuilder rowValues = new StringBuilder();
+            DatFileConfig config = ConquerToolsHelper.CTools.SelectedDatFile.GetCurrentConfig();
+            foreach (DataGridViewRow row in dgvAdvanced.Rows)
             {
-                ConquerToolsHelper.CTools.AutoDetectionEncrypt(selectFile.FileName, filenameOutput);
+                rowValuesGenerated.Add((uint)row.Index, new DatFileLine() { LineAttribute = new Dictionary<string, string>() });
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    string cellValue = cell.Value.ToString();
+                    rowValuesGenerated[(uint)row.Index].LineAttribute.Add("#" + cell.ColumnIndex, cellValue);
+                    rowValues.Append(cellValue);
+                    if (cell.ColumnIndex < row.Cells.Count)
+                    {
+                        StringBuilder builder = new StringBuilder();
+                        foreach (char value in config.Separators)
+                        {
+                            builder.Append(value);
+                        }
+                        string sep = builder.ToString();
+                        rowValues.Append(sep);
+                    }
+                }
+                rowValues.Append('\n');
             }
-            else
-            {
-                ConquerToolsHelper.CTools.CustomEncrypt(selectFile.FileName, filenameOutput, datFileType);
-            }
+            ConquerToolsHelper.CTools.SelectedDatFile.CurrentFileContent = rowValuesGenerated;
+            ConquerToolsHelper.CTools.SelectedDatFile.CurrentRAWFileContent = rowValues.ToString().Split('\n');
+            ConquerToolsHelper.CTools.SaveDat();
         }
 
         private void BtnOpenFile_Click(object sender, EventArgs e)

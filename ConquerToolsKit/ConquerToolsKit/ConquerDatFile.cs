@@ -135,7 +135,26 @@ namespace ConquerToolsKit
             return success;
         }
 
-        public byte[] Decrypt(byte[] b)
+        /// <summary>
+        /// Save the file
+        /// </summary>
+        public void Save()
+        {
+            // Force .dat extension output
+            string outputFilename = Path.ChangeExtension(CurrentFilename, "dat");
+            // Encrypt the content
+            MemoryStream stream = new MemoryStream();
+            foreach (string str in CurrentRAWFileContent)
+            {
+                stream.Write(Encoding.ASCII.GetBytes(str), 0, Encoding.ASCII.GetBytes(str).Length);
+                stream.Write(Encoding.ASCII.GetBytes("\n"), 0, Encoding.ASCII.GetBytes("\n").Length);
+            }
+            // Save to file
+            File.WriteAllBytes(outputFilename, Encrypt(stream.ToArray()));
+            // Log Info: Original Size of file is changed. Any error on process?¿
+        }
+
+        private byte[] Decrypt(byte[] b)
         {
             for (int i = 0; i < b.Length; i++)
             {
@@ -146,7 +165,7 @@ namespace ConquerToolsKit
             return b;
         }
 
-        public byte[] Encrypt(byte[] b)
+        private byte[] Encrypt(byte[] b)
         {
             for (int i = 0; i < b.Length; i++)
             {

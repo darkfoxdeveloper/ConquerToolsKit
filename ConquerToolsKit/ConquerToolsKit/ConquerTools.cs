@@ -137,28 +137,18 @@ namespace ConquerToolsKit
             }
         }
 
-        public void AutoDetectionEncrypt(string filename, string filenameOutput)
+        public void SaveDat()
         {
-            ConquerDatFile dc = new ConquerDatFile(filename);
-            SelectedDatFile = dc;
-            switch(dc.CurrentDatFileType)
+            switch (ConquerToolsHelper.CTools.SelectedDatFile.CurrentDatFileType)
             {
                 case DatFileType.ITEMTYPE:
                 case DatFileType.MAGICTYPE:
                 case DatFileType.MAGICTYPEOP:
                     {
-                        // TODO code this save part
+                        ConquerToolsHelper.CTools.SelectedDatFile.Save();
                         break;
                     }
             }
-        }
-
-        public void CustomEncrypt(string filename, string filenameOutput, ConquerDatFile.DatFileType datFileType)
-        {
-            ConquerDatFile dc = new ConquerDatFile(filename, datFileType);
-            SelectedDatFile = dc;
-            byte[] output = dc.Encrypt(File.ReadAllBytes(filename));
-            File.WriteAllBytes(filenameOutput, output);
         }
 
         public void AutoDetectionDecrypt(string filename, string filenameOutput)
