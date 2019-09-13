@@ -38,7 +38,6 @@
             this.btnOpenFile = new MetroFramework.Controls.MetroButton();
             this.cbxDatFileType = new MetroFramework.Controls.MetroComboBox();
             this.btnEncryptDat = new MetroFramework.Controls.MetroButton();
-            this.btnDecryptDat = new MetroFramework.Controls.MetroButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.lblAbout = new MetroFramework.Controls.MetroLabel();
             this.mainPanel = new MetroFramework.Controls.MetroPanel();
@@ -72,7 +71,6 @@
             this.tabPage1.Controls.Add(this.btnOpenFile);
             this.tabPage1.Controls.Add(this.cbxDatFileType);
             this.tabPage1.Controls.Add(this.btnEncryptDat);
-            this.tabPage1.Controls.Add(this.btnDecryptDat);
             this.tabPage1.Location = new System.Drawing.Point(4, 38);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Size = new System.Drawing.Size(786, 340);
@@ -82,7 +80,7 @@
             // lblRawMode
             // 
             this.lblRawMode.AutoSize = true;
-            this.lblRawMode.Location = new System.Drawing.Point(595, 65);
+            this.lblRawMode.Location = new System.Drawing.Point(595, 64);
             this.lblRawMode.Name = "lblRawMode";
             this.lblRawMode.Size = new System.Drawing.Size(87, 19);
             this.lblRawMode.TabIndex = 9;
@@ -132,7 +130,7 @@
             // 
             this.cbxDatFileType.FormattingEnabled = true;
             this.cbxDatFileType.ItemHeight = 23;
-            this.cbxDatFileType.Location = new System.Drawing.Point(290, 13);
+            this.cbxDatFileType.Location = new System.Drawing.Point(210, 10);
             this.cbxDatFileType.Name = "cbxDatFileType";
             this.cbxDatFileType.Size = new System.Drawing.Size(121, 29);
             this.cbxDatFileType.TabIndex = 4;
@@ -140,23 +138,13 @@
             // 
             // btnEncryptDat
             // 
-            this.btnEncryptDat.Location = new System.Drawing.Point(200, 15);
+            this.btnEncryptDat.Location = new System.Drawing.Point(103, 15);
             this.btnEncryptDat.Name = "btnEncryptDat";
-            this.btnEncryptDat.Size = new System.Drawing.Size(75, 23);
+            this.btnEncryptDat.Size = new System.Drawing.Size(91, 23);
             this.btnEncryptDat.TabIndex = 3;
-            this.btnEncryptDat.Text = "Encrypt";
+            this.btnEncryptDat.Text = "Save changes";
             this.btnEncryptDat.UseSelectable = true;
             this.btnEncryptDat.Click += new System.EventHandler(this.BtnEncryptDat_Click);
-            // 
-            // btnDecryptDat
-            // 
-            this.btnDecryptDat.Location = new System.Drawing.Point(105, 15);
-            this.btnDecryptDat.Name = "btnDecryptDat";
-            this.btnDecryptDat.Size = new System.Drawing.Size(75, 23);
-            this.btnDecryptDat.TabIndex = 2;
-            this.btnDecryptDat.Text = "Decrypt";
-            this.btnDecryptDat.UseSelectable = true;
-            this.btnDecryptDat.Click += new System.EventHandler(this.BtnDecryptDat_Click);
             // 
             // tabPage2
             // 
@@ -240,7 +228,6 @@
         private System.Windows.Forms.PictureBox mainIcon;
         private System.Windows.Forms.TabPage tabPage1;
         private MetroFramework.Controls.MetroButton btnEncryptDat;
-        private MetroFramework.Controls.MetroButton btnDecryptDat;
         private MetroFramework.Controls.MetroComboBox cbxDatFileType;
         private MetroFramework.Controls.MetroButton btnOpenFile;
         private MetroFramework.Controls.MetroLabel lblSelectedDatFile;

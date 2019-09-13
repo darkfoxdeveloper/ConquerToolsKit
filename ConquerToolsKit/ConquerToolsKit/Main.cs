@@ -69,11 +69,10 @@ namespace ConquerToolsKit
                 {
                     ConquerToolsHelper.CTools.CustomDecrypt(selectFile.FileName, filenameOutput, datFileType);
                 }
-                //if (File.Exists(filenameOutput))
-                //{
-                //    string[] lines = File.ReadAllLines(filenameOutput);
-                //    ConquerToolsHelper.CTools.GenerateTable(lines, dgvAdvanced, ConquerToolsHelper.CTools.SelectedDatFile, tglRawMode.Checked);
-                //}
+                if (ConquerToolsHelper.CTools.SelectedDatFile.CurrentFileContent.Count > 0)
+                {
+                    ConquerToolsHelper.CTools.GenerateTable(dgvAdvanced, tglRawMode.Checked);
+                }
             }
         }
 
