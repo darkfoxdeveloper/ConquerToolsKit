@@ -80,7 +80,7 @@ namespace ConquerToolsKit
                         byte[] content = File.ReadAllBytes(CurrentFilename);
                         string oneBigString = Encoding.ASCII.GetString(Decrypt(content));
                         string[] contentLines = oneBigString.Split('\n');
-                        CurrentRAWFileContent = contentLines;
+                        List<string> rawBuilder = new List<string>();
 
                         int maxPar = 0;
                         foreach (string currentLine in contentLines)
@@ -95,25 +95,27 @@ namespace ConquerToolsKit
                         uint nLine = 0;
                         foreach (string currentLine in contentLines)
                         {
-                            int n = 0;
-                            string[] lineSplit = currentLine.Split(GetCurrentConfig().Separators, StringSplitOptions.RemoveEmptyEntries);
-                            DatFileLine dfline = new DatFileLine();
-                            foreach (string attr in lineSplit)
+                            if (!currentLine.Equals(""))
                             {
-                                if (!attr.Equals("\r"))
+                                int n = 0;
+                                string[] lineSplit = currentLine.Split(GetCurrentConfig().Separators, StringSplitOptions.RemoveEmptyEntries);
+                                DatFileLine dfline = new DatFileLine();
+                                foreach (string attr in lineSplit)
                                 {
                                     string header = "#" + n;
                                     if (GetCurrentConfig().FileHeaders != null && GetCurrentConfig().FileHeaders.Length > n)
                                     {
                                         header = GetCurrentConfig().FileHeaders[n];
                                     }
-                                    dfline.Add(header, attr);
+                                    dfline.Add(header, attr.TrimEnd('\r'));
                                     n++;
                                 }
+                                CurrentFileContent.Add(nLine, dfline);
+                                rawBuilder.Add(currentLine + Environment.NewLine);
+                                nLine++;
                             }
-                            CurrentFileContent.Add(nLine, dfline);
-                            nLine++;
                         }
+                        CurrentRAWFileContent = rawBuilder.ToArray();
                         if (contentLines.Length > 0) success = true;
                         break;
                     }

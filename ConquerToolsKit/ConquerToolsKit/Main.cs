@@ -52,18 +52,25 @@ namespace ConquerToolsKit
                 rowValuesGenerated.Add((uint)row.Index, new DatFileLine() { LineAttribute = new Dictionary<string, string>() });
                 foreach (DataGridViewCell cell in row.Cells)
                 {
-                    string cellValue = cell.Value.ToString();
-                    rowValuesGenerated[(uint)row.Index].LineAttribute.Add("#" + cell.ColumnIndex, cellValue);
-                    rowValues.Append(cellValue);
-                    if (cell.ColumnIndex < row.Cells.Count)
+                    if (cell.Value != null)
                     {
-                        StringBuilder builder = new StringBuilder();
-                        foreach (char value in config.Separators)
+                        string cellValue = cell.Value.ToString();
+                        if (cellValue == "")
                         {
-                            builder.Append(value);
+                            cellValue = "0";
                         }
-                        string sep = builder.ToString();
-                        rowValues.Append(sep);
+                        rowValuesGenerated[(uint)row.Index].LineAttribute.Add("#" + cell.ColumnIndex, cellValue);
+                        rowValues.Append(cellValue);
+                        if (cell.ColumnIndex < row.Cells.Count)
+                        {
+                            StringBuilder builder = new StringBuilder();
+                            foreach (char value in config.Separators)
+                            {
+                                builder.Append(value);
+                            }
+                            string sep = builder.ToString();
+                            rowValues.Append(sep);
+                        }
                     }
                 }
                 rowValues.Append('\n');

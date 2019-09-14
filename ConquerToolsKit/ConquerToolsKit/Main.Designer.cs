@@ -98,7 +98,6 @@
             // 
             // dgvAdvanced
             // 
-            this.dgvAdvanced.AllowUserToAddRows = false;
             this.dgvAdvanced.AllowUserToOrderColumns = true;
             this.dgvAdvanced.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAdvanced.Location = new System.Drawing.Point(15, 90);
