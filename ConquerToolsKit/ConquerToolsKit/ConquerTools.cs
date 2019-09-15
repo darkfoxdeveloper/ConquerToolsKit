@@ -110,10 +110,10 @@ namespace ConquerToolsKit
                         }
                     },
                     {
-                        ConquerDatFile.DatFileType.AUTOLOOT,
+                        ConquerDatFile.DatFileType.AUTOALLOT,
                         new DatFileConfig()
                         {
-                            FileType = ConquerDatFile.DatFileType.AUTOLOOT,
+                            FileType = ConquerDatFile.DatFileType.AUTOALLOT,
                             EncryptionKey = ConquerDatFile.EncryptionKey.COMMON,
                             Separators = null
                         }

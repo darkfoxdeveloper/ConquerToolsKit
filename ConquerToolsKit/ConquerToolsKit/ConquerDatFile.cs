@@ -119,10 +119,13 @@ namespace ConquerToolsKit
                         if (contentLines.Length > 0) success = true;
                         break;
                     }
-                case DatFileType.AUTOLOOT:
+                case DatFileType.AUTOALLOT:
                     {
                         CO2_CORE_DLL.IO.AutoAllot aLoot = new CO2_CORE_DLL.IO.AutoAllot();
                         aLoot.LoadFromDat(CurrentFilename);
+                        aLoot.SaveToTxt("autoallot.dat.tmp");
+                        CurrentRAWFileContent = File.ReadAllLines("autoallot.dat.tmp");
+                        if (CurrentRAWFileContent.Length > 0) success = true;
                         // TODO Finish
                         break;
                     }
@@ -218,7 +221,7 @@ namespace ConquerToolsKit
                     }
                 case "autoallot":
                     {
-                        CurrentDatFileType = DatFileType.AUTOLOOT;
+                        CurrentDatFileType = DatFileType.AUTOALLOT;
                         break;
                     }
                 case "mapdestination":
@@ -270,7 +273,7 @@ namespace ConquerToolsKit
             MAGICTYPEOP,
             LEVELEXP,
             LEVEXP,
-            AUTOLOOT,
+            AUTOALLOT,
             MAPDESTINATION,
         }
     }
