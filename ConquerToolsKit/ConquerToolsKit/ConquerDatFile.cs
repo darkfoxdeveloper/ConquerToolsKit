@@ -68,7 +68,7 @@ namespace ConquerToolsKit
         /// <summary>
         /// Open the file and get content
         /// </summary>
-        public bool Open()
+        public bool Open(bool isDecrypted = false)
         {
             bool success = false;
             switch (CurrentDatFileType)
@@ -78,7 +78,14 @@ namespace ConquerToolsKit
                 case DatFileType.MAGICTYPEOP:
                     {
                         byte[] content = File.ReadAllBytes(CurrentFilename);
-                        string oneBigString = Encoding.ASCII.GetString(Decrypt(content));
+                        string oneBigString = "";
+                        if (isDecrypted)
+                        {
+                            oneBigString = Encoding.ASCII.GetString(content);
+                        } else
+                        {
+                            oneBigString = Encoding.ASCII.GetString(Decrypt(content));
+                        }
                         string[] contentLines = oneBigString.Split('\n');
                         List<string> rawBuilder = new List<string>();
 
@@ -111,7 +118,7 @@ namespace ConquerToolsKit
                                     n++;
                                 }
                                 CurrentFileContent.Add(nLine, dfline);
-                                rawBuilder.Add(currentLine + Environment.NewLine);
+                                rawBuilder.Add(currentLine.TrimEnd('\r') + Environment.NewLine);
                                 nLine++;
                             }
                         }
@@ -152,10 +159,27 @@ namespace ConquerToolsKit
             foreach (string str in CurrentRAWFileContent)
             {
                 stream.Write(Encoding.ASCII.GetBytes(str), 0, Encoding.ASCII.GetBytes(str).Length);
-                stream.Write(Encoding.ASCII.GetBytes("\n"), 0, Encoding.ASCII.GetBytes("\n").Length);
             }
             // Save to file
             File.WriteAllBytes(outputFilename, Encrypt(stream.ToArray()));
+            // Log Info: Original Size of file is changed. Any error on process?¿
+        }
+
+        /// <summary>
+        /// Save the file (decrypted)
+        /// </summary>
+        public void DecryptedSave()
+        {
+            // Force .txt extension output
+            string outputFilename = Path.ChangeExtension(CurrentFilename, "txt");
+            // Encrypt the content
+            MemoryStream stream = new MemoryStream();
+            foreach (string str in CurrentRAWFileContent)
+            {
+                stream.Write(Encoding.ASCII.GetBytes(str), 0, Encoding.ASCII.GetBytes(str).Length);
+            }
+            // Save to file
+            File.WriteAllBytes(outputFilename, stream.ToArray());
             // Log Info: Original Size of file is changed. Any error on process?¿
         }
 

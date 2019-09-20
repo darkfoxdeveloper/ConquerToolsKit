@@ -39,6 +39,12 @@
             this.cbxDatFileType = new MetroFramework.Controls.MetroComboBox();
             this.btnEncryptDat = new MetroFramework.Controls.MetroButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lblSelectedDatGeneral = new MetroFramework.Controls.MetroLabel();
+            this.btnOpenFileGeneral = new MetroFramework.Controls.MetroButton();
+            this.cbxFileType = new MetroFramework.Controls.MetroComboBox();
+            this.btnEncryptDecrypt = new MetroFramework.Controls.MetroButton();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.lblAbout = new MetroFramework.Controls.MetroLabel();
             this.mainPanel = new MetroFramework.Controls.MetroPanel();
             this.selectFile = new System.Windows.Forms.OpenFileDialog();
@@ -47,6 +53,7 @@
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdvanced)).BeginInit();
             this.tabPage2.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainIcon)).BeginInit();
             this.SuspendLayout();
@@ -55,6 +62,8 @@
             // 
             this.tabTools.Controls.Add(this.tabPage1);
             this.tabTools.Controls.Add(this.tabPage2);
+            this.tabTools.Controls.Add(this.tabPage3);
+            this.tabTools.Controls.Add(this.tabPage4);
             this.tabTools.Location = new System.Drawing.Point(3, 3);
             this.tabTools.Name = "tabTools";
             this.tabTools.SelectedIndex = 0;
@@ -134,6 +143,7 @@
             this.cbxDatFileType.Size = new System.Drawing.Size(121, 29);
             this.cbxDatFileType.TabIndex = 4;
             this.cbxDatFileType.UseSelectable = true;
+            this.cbxDatFileType.Visible = false;
             // 
             // btnEncryptDat
             // 
@@ -147,21 +157,82 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.lblAbout);
+            this.tabPage2.Controls.Add(this.lblSelectedDatGeneral);
+            this.tabPage2.Controls.Add(this.btnOpenFileGeneral);
+            this.tabPage2.Controls.Add(this.cbxFileType);
+            this.tabPage2.Controls.Add(this.btnEncryptDecrypt);
             this.tabPage2.Location = new System.Drawing.Point(4, 38);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(786, 340);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "About";
+            this.tabPage2.Text = "Encrypt/Decrypt";
+            // 
+            // lblSelectedDatGeneral
+            // 
+            this.lblSelectedDatGeneral.AutoSize = true;
+            this.lblSelectedDatGeneral.BackColor = System.Drawing.Color.Transparent;
+            this.lblSelectedDatGeneral.Location = new System.Drawing.Point(15, 45);
+            this.lblSelectedDatGeneral.Name = "lblSelectedDatGeneral";
+            this.lblSelectedDatGeneral.Size = new System.Drawing.Size(95, 19);
+            this.lblSelectedDatGeneral.TabIndex = 10;
+            this.lblSelectedDatGeneral.Text = "Selected File: -";
+            // 
+            // btnOpenFileGeneral
+            // 
+            this.btnOpenFileGeneral.Location = new System.Drawing.Point(15, 15);
+            this.btnOpenFileGeneral.Name = "btnOpenFileGeneral";
+            this.btnOpenFileGeneral.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenFileGeneral.TabIndex = 9;
+            this.btnOpenFileGeneral.Text = "Open File";
+            this.btnOpenFileGeneral.UseSelectable = true;
+            this.btnOpenFileGeneral.Click += new System.EventHandler(this.BtnOpenFileGeneral_Click);
+            // 
+            // cbxFileType
+            // 
+            this.cbxFileType.FormattingEnabled = true;
+            this.cbxFileType.ItemHeight = 23;
+            this.cbxFileType.Location = new System.Drawing.Point(210, 10);
+            this.cbxFileType.Name = "cbxFileType";
+            this.cbxFileType.Size = new System.Drawing.Size(121, 29);
+            this.cbxFileType.TabIndex = 8;
+            this.cbxFileType.UseSelectable = true;
+            this.cbxFileType.Visible = false;
+            // 
+            // btnEncryptDecrypt
+            // 
+            this.btnEncryptDecrypt.Location = new System.Drawing.Point(103, 15);
+            this.btnEncryptDecrypt.Name = "btnEncryptDecrypt";
+            this.btnEncryptDecrypt.Size = new System.Drawing.Size(91, 23);
+            this.btnEncryptDecrypt.TabIndex = 7;
+            this.btnEncryptDecrypt.Text = "Encrypt/Decrypt";
+            this.btnEncryptDecrypt.UseSelectable = true;
+            this.btnEncryptDecrypt.Click += new System.EventHandler(this.btnEncryptDecrypt_Click);
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 38);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(786, 340);
+            this.tabPage3.TabIndex = 3;
+            this.tabPage3.Text = "Packer/Unpacker";
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.lblAbout);
+            this.tabPage4.Location = new System.Drawing.Point(4, 38);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(786, 340);
+            this.tabPage4.TabIndex = 4;
+            this.tabPage4.Text = "About";
             // 
             // lblAbout
             // 
-            this.lblAbout.AutoSize = true;
             this.lblAbout.Location = new System.Drawing.Point(15, 15);
             this.lblAbout.Name = "lblAbout";
-            this.lblAbout.Size = new System.Drawing.Size(243, 19);
+            this.lblAbout.Size = new System.Drawing.Size(755, 311);
             this.lblAbout.TabIndex = 0;
-            this.lblAbout.Text = "This program is under developing now...";
+            this.lblAbout.Text = "This software is under developing now...\r\n\r\n\r\nCredits:\r\nDaRkFoxDeveloper (Develop" +
+    "er of this software)\r\nCO2_CORE_DLL Library (CptSky of Elitepvpers)\r\n";
             // 
             // mainPanel
             // 
@@ -211,6 +282,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdvanced)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
             this.mainPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainIcon)).EndInit();
             this.ResumeLayout(false);
@@ -233,6 +305,12 @@
         private System.Windows.Forms.DataGridView dgvAdvanced;
         private MetroFramework.Controls.MetroToggle tglRawMode;
         private MetroFramework.Controls.MetroLabel lblRawMode;
+        private System.Windows.Forms.TabPage tabPage3;
+        private MetroFramework.Controls.MetroLabel lblSelectedDatGeneral;
+        private MetroFramework.Controls.MetroButton btnOpenFileGeneral;
+        private MetroFramework.Controls.MetroComboBox cbxFileType;
+        private MetroFramework.Controls.MetroButton btnEncryptDecrypt;
+        private System.Windows.Forms.TabPage tabPage4;
     }
 }
 

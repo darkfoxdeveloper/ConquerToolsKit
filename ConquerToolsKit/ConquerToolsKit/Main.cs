@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using static ConquerToolsKit.ConquerDatFile;
@@ -19,11 +20,13 @@ namespace ConquerToolsKit
         private void Main_Load(object sender, EventArgs e)
         {
             cbxDatFileType.DataSource = Enum.GetNames(typeof(DatFileType));
+            cbxFileType.DataSource = Enum.GetNames(typeof(DatFileType));
         }
 
         private void SelectFile_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             lblSelectedDatFile.Text = "Selected File: " + selectFile.FileName;
+            lblSelectedDatGeneral.Text = "Selected File: " + selectFile.FileName;
         }
 
         private void BtnDecryptDat_Click(object sender, EventArgs e)
@@ -106,6 +109,34 @@ namespace ConquerToolsKit
         private void MainIcon_Click(object sender, EventArgs e)
         {
             tabTools.SelectedIndex = tabTools.TabCount - 1;
+        }
+
+        private void BtnOpenFileGeneral_Click(object sender, EventArgs e)
+        {
+            selectFile.Filter = "Encrypted or Decrypted Conquer Dat File|*.dat;*.txt";
+            DialogResult dres = selectFile.ShowDialog();
+        }
+
+        private void btnEncryptDecrypt_Click(object sender, EventArgs e)
+        {
+            if (selectFile.CheckFileExists)
+            {
+                string ext = Path.GetExtension(selectFile.FileName);
+                string filenameOutput = Path.ChangeExtension(selectFile.FileName, ext == ".dat" ? "txt" : "dat");
+                Enum.TryParse(cbxDatFileType.SelectedItem.ToString(), out DatFileType datFileType);
+                if (datFileType == DatFileType.AUTODETECT)
+                {
+                    ConquerToolsHelper.CTools.AutoDetectionDecrypt(selectFile.FileName, filenameOutput);
+                }
+                else
+                {
+                    ConquerToolsHelper.CTools.CustomDecrypt(selectFile.FileName, filenameOutput, datFileType);
+                }
+                if (ext == ".dat") { ConquerToolsHelper.CTools.SelectedDatFile.DecryptedSave(); } else { ConquerToolsHelper.CTools.SelectedDatFile.Save();  }
+            } else
+            {
+                MessageBox.Show("Please, select some dat file.", Assembly.GetCallingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

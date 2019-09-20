@@ -158,7 +158,14 @@ namespace ConquerToolsKit
             DatFileConfig datFileConfig = ConquerToolsHelper.CTools.CurrentConfig.DatFilesConfig.Where(x => x.Key == dc.CurrentDatFileType).FirstOrDefault().Value;
             if (datFileConfig != null)
             {
-                dc.Open();
+                if (Path.GetExtension(filename) == ".txt")
+                {
+                    dc.Open(true);
+                }
+                else
+                {
+                    dc.Open();
+                }
             }
         }
 
@@ -169,7 +176,13 @@ namespace ConquerToolsKit
             DatFileConfig datFileConfig = ConquerToolsHelper.CTools.CurrentConfig.DatFilesConfig.Where(x => x.Key == dc.CurrentDatFileType).FirstOrDefault().Value;
             if (datFileConfig != null)
             {
-                dc.Open();
+                if (Path.GetExtension(filename) == ".txt")
+                {
+                    dc.Open(true);
+                } else
+                {
+                    dc.Open();
+                }
             }
         }
 
