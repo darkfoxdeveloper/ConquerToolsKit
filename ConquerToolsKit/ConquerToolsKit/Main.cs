@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -137,6 +138,11 @@ namespace ConquerToolsKit
             {
                 MessageBox.Show("Please, select some dat file.", Assembly.GetCallingAssembly().GetName().Name, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void BtnUnpack_Click(object sender, EventArgs e)
+        {
+            Process p = Process.Start("WDB-Extractor.exe");
         }
     }
 }

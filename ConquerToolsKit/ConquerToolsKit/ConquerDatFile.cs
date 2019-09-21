@@ -126,23 +126,23 @@ namespace ConquerToolsKit
                         if (contentLines.Length > 0) success = true;
                         break;
                     }
-                case DatFileType.AUTOALLOT:
-                    {
-                        CO2_CORE_DLL.IO.AutoAllot aLoot = new CO2_CORE_DLL.IO.AutoAllot();
-                        aLoot.LoadFromDat(CurrentFilename);
-                        aLoot.SaveToTxt("autoallot.dat.tmp");
-                        CurrentRAWFileContent = File.ReadAllLines("autoallot.dat.tmp");
-                        if (CurrentRAWFileContent.Length > 0) success = true;
-                        // TODO Finish
-                        break;
-                    }
-                case DatFileType.LEVELEXP:
-                    {
-                        CO2_CORE_DLL.IO.LevelExp le = new CO2_CORE_DLL.IO.LevelExp();
-                        le.LoadFromDat(CurrentFilename);
-                        // TODO Finish
-                        break;
-                    }
+                //case DatFileType.AUTOALLOT:
+                //    {
+                //        CO2_CORE_DLL.IO.AutoAllot aLoot = new CO2_CORE_DLL.IO.AutoAllot();
+                //        aLoot.LoadFromDat(CurrentFilename);
+                //        aLoot.SaveToTxt("autoallot.dat.tmp");
+                //        CurrentRAWFileContent = File.ReadAllLines("autoallot.dat.tmp");
+                //        if (CurrentRAWFileContent.Length > 0) success = true;
+                //        // TODO Finish
+                //        break;
+                //    }
+                //case DatFileType.LEVELEXP:
+                //    {
+                //        CO2_CORE_DLL.IO.LevelExp le = new CO2_CORE_DLL.IO.LevelExp();
+                //        le.LoadFromDat(CurrentFilename);
+                //        // TODO Finish
+                //        break;
+                //    }
             }
             return success;
         }

@@ -120,6 +120,20 @@
   <metadata name="tabTools.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="lblAbout.Text" xml:space="preserve">
+    <value>This software is under developing now...
+
+Only compatible for now:
+ITEMTYPE
+MAGICITEMTYPE
+MAGICTYPEOP
+
+
+Credits:
+Cristian Ocaña Soler (DaRkFoxDeveloper) (Developer of this software)
+CO2_CORE_DLL Library (CptSky of Elitepvpers)
+</value>
+  </data>
   <metadata name="mainPanel.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

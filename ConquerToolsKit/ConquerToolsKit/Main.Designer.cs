@@ -49,10 +49,12 @@
             this.mainPanel = new MetroFramework.Controls.MetroPanel();
             this.selectFile = new System.Windows.Forms.OpenFileDialog();
             this.mainIcon = new System.Windows.Forms.PictureBox();
+            this.btnUnpack = new MetroFramework.Controls.MetroButton();
             this.tabTools.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdvanced)).BeginInit();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainIcon)).BeginInit();
@@ -66,7 +68,7 @@
             this.tabTools.Controls.Add(this.tabPage4);
             this.tabTools.Location = new System.Drawing.Point(3, 3);
             this.tabTools.Name = "tabTools";
-            this.tabTools.SelectedIndex = 0;
+            this.tabTools.SelectedIndex = 2;
             this.tabTools.Size = new System.Drawing.Size(794, 382);
             this.tabTools.TabIndex = 0;
             this.tabTools.UseSelectable = true;
@@ -210,6 +212,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.btnUnpack);
             this.tabPage3.Location = new System.Drawing.Point(4, 38);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(786, 340);
@@ -231,8 +234,7 @@
             this.lblAbout.Name = "lblAbout";
             this.lblAbout.Size = new System.Drawing.Size(755, 311);
             this.lblAbout.TabIndex = 0;
-            this.lblAbout.Text = "This software is under developing now...\r\n\r\n\r\nCredits:\r\nDaRkFoxDeveloper (Develop" +
-    "er of this software)\r\nCO2_CORE_DLL Library (CptSky of Elitepvpers)\r\n";
+            this.lblAbout.Text = resources.GetString("lblAbout.Text");
             // 
             // mainPanel
             // 
@@ -263,6 +265,16 @@
             this.mainIcon.TabStop = false;
             this.mainIcon.Click += new System.EventHandler(this.MainIcon_Click);
             // 
+            // btnUnpack
+            // 
+            this.btnUnpack.Location = new System.Drawing.Point(15, 15);
+            this.btnUnpack.Name = "btnUnpack";
+            this.btnUnpack.Size = new System.Drawing.Size(98, 23);
+            this.btnUnpack.TabIndex = 10;
+            this.btnUnpack.Text = "Unpack C3.WDB";
+            this.btnUnpack.UseSelectable = true;
+            this.btnUnpack.Click += new System.EventHandler(this.BtnUnpack_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -282,6 +294,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvAdvanced)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.mainPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainIcon)).EndInit();
@@ -311,6 +324,7 @@
         private MetroFramework.Controls.MetroComboBox cbxFileType;
         private MetroFramework.Controls.MetroButton btnEncryptDecrypt;
         private System.Windows.Forms.TabPage tabPage4;
+        private MetroFramework.Controls.MetroButton btnUnpack;
     }
 }
 
